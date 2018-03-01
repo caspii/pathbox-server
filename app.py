@@ -9,14 +9,14 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    log_request(request)
+    # log_request(request)
     return "Hello World!"
 
 
 
 @app.route("/v1/")
 def save_location():
-    # log_request(request)
+    log_request(request)
     return "Hello World!"
 
 
@@ -44,7 +44,7 @@ def log_request(request):
         location = Location(latitude=latitude, longitude=longitude, username=username, date=date)
         location.save()
     except (AttributeError):
-        print "Date not parseable: " + request
+        print "Date not parseable"
 
 
 @app.cli.command('initdb')
