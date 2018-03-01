@@ -1,5 +1,5 @@
 from flask import Flask, request
-from model import db, initdb, Location
+from model import initdb, Location
 import urllib
 from datetime import datetime
 
@@ -20,9 +20,17 @@ def save_location():
     return "Thanks dude"
 
 
+@app.route("/view/<username>")
+def view_username(username):
+    output = "Hello " + username + '<br>'
+    logs = Location.select().where(Location.username == username).order_by(Location.date.desc())
+
+    for log in logs:
+        output += str(log.date) + '<br>'
+    return output
+
 
 def log_request(request):
-
     latitude = request.args.get('latitude')
     longitude = request.args.get('longitude')
     username = request.args.get('username')
@@ -37,10 +45,6 @@ def log_request(request):
         location.save()
     except (AttributeError):
         print "Date not parseable: " + date_str
-
-    # response =  '%s :: (lat, long) = (%s, %s). username = %s, sessionid = %s ' % (date, latitude, longitude, username, sessionid)
-
-
 
 @app.cli.command('initdb')
 def initdb_command():
