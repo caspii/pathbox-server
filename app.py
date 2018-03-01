@@ -16,8 +16,8 @@ def hello():
 
 @app.route("/v1/")
 def save_location():
-    log_request(request)
-    return "Thanks dude"
+    # log_request(request)
+    return "Hello World!"
 
 
 @app.route("/view/<username>")
@@ -44,7 +44,8 @@ def log_request(request):
         location = Location(latitude=latitude, longitude=longitude, username=username, date=date)
         location.save()
     except (AttributeError):
-        print "Date not parseable: " + date_str
+        print "Date not parseable: " + request
+
 
 @app.cli.command('initdb')
 def initdb_command():
