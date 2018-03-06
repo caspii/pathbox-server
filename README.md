@@ -3,6 +3,9 @@ This is a webapp implemented in Python Flask which
 * receives locations from multiple mobile clients
 * displays those locations on a map
 
+A client request looks like this:
+
+`localhost:5000/view/?latitude=X&longitude=Y&username=Z&sessionid=A`
 
 # Setup development environment 💻
 1. Install packages:
