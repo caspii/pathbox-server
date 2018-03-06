@@ -1,6 +1,6 @@
 from flask import Flask, request
 from model import initdb, Location
-import urllib
+import urllib.parse
 from datetime import datetime
 
 
@@ -37,14 +37,15 @@ def log_request(request):
     sessionid = request.args.get('sessionid')
 
     try:
-        date_str = urllib.unquote(request.args.get('date')).decode('utf8')
+        print(request.args.get('date'))
+        date_str = urllib.parse.unquote(request.args.get('date'))
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
-        print "New log from : " + username + " Date: " + str(date)
-        print "----"
+        print("New log from : " + username + " Date: " + str(date))
+        print("----")
         location = Location(latitude=latitude, longitude=longitude, username=username, date=date)
         location.save()
     except (AttributeError):
-        print "Date not parseable"
+        print("Date not parseable")
 
 
 @app.cli.command('initdb')
@@ -52,4 +53,4 @@ def initdb_command():
     """Initializes the database using the command line."""
     # TODO: prevent this from being done on production
     initdb()
-    print 'Initialized the database.'
+    print('Initialized the database.')

@@ -32,4 +32,4 @@ def initdb():
     try:
         Location.create_table(True)
     except peewee.OperationalError:
-        print "Error whilst creating table"
+        print("Error whilst creating table")
