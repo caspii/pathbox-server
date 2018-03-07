@@ -1,4 +1,4 @@
-# Server for the GPS logging app
+# Server for the GPS tracking app
 This is a webapp implemented in Python Flask which
 * receives locations from multiple mobile clients
 * displays those locations on a map
@@ -11,7 +11,7 @@ A client request looks like this:
 1. Install packages:
    * On Ubuntu: `sudo apt install python-pip python-virtualenv python-dev memcached`
    * On Mac OSX: `brew install bower pyenv-virtualenv memcached`
-1. Create virtual environment: `mkdir venv && virtualenv venv`
+1. Create virtual environment: `virtualenv -p python3 venv`
 1. Enter virtualenv with `. venv/bin/activate`
 1. `pip install -r requirements.txt`
 1. Initialise database: `./init_db.sh`
