@@ -19,13 +19,20 @@ def save_location():
     return "Hello World!"
 
 
-@app.route("/view/<username>")
-def view_username(username):
-    output = "Hello " + username + '<br>'
-    logs = Location.select().where(Location.username == username).order_by(Location.date.desc())
+@app.route("/view/<public_token>/<date_str>")
+@app.route("/view/<public_token>")
+def view_username(public_token, date_str=None):
+    if date_str is not None:
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    else:
+        date = None
+    first_seen, last_seen, logs = Client.get_logs(public_token, date)
+
+    output = "Hello " + public_token + '<br>'
+    output += "First seen: %s, last seen %s <br>" %(first_seen, last_seen)
 
     for log in logs:
-        output += str(log.date) + '<br>'
+        output += str(log.date_created) + '<br>'
     return output
 
 
@@ -44,7 +51,7 @@ def log_request(request):
         print("Request cannot be parsed: " + str(e))
     client = Client.fetch(public_token, secret_token)
     if client:
-        client.log_location(latitude=latitude, longitude=longitude, date=date)
+        client.add_log_entry(latitude=latitude, longitude=longitude, date=date)
 
 
 @app.cli.command('init_db')

@@ -44,7 +44,21 @@ class Client(BaseModel):
                                    date_first_seen=now, date_last_seen=now)
         return client
 
-    def log_location(self, latitude, longitude, date):
+    @classmethod
+    def get_logs(cls, public_token, date=None):
+        try:
+            client = Client.get(Client.public_token == public_token)
+        except Client.DoesNotExist:
+            return None
+        if date is None:
+            logs = Location.select().where(Location.client == client).order_by(Location.date_created.desc())
+        return client.date_first_seen, client.date_last_seen, logs
+
+
+
+        pass
+
+    def add_log_entry(self, latitude, longitude, date):
         print('Creating a log for client ' + self.public_token)
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date,
                         date_logged=datetime.now())
@@ -70,3 +84,4 @@ def init_db():
     except OperationalError:
         print("Error whilst creating table")
 
+###################################################
