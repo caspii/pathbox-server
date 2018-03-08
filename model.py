@@ -63,7 +63,7 @@ class Location(BaseModel):
     date_logged = DateTimeField()        # Date that client sent location to server
 
 
-def initdb():
+def init_db():
     try:
         Location.create_table(True)
         Client.create_table(True)

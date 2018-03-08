@@ -2,4 +2,4 @@
 . venv/bin/activate
 export FLASK_APP=app.py
 rm -f database.db
-flask initdb
+flask init_db

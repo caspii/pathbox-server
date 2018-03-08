@@ -1,5 +1,5 @@
 from flask import Flask, request
-from model import initdb, Location, Client
+from model import init_db, Location, Client
 import urllib.parse
 from datetime import datetime
 
@@ -47,9 +47,9 @@ def log_request(request):
         client.log_location(latitude=latitude, longitude=longitude, date=date)
 
 
-@app.cli.command('initdb')
-def initdb_command():
+@app.cli.command('init_db')
+def init_db_command():
     """Initializes the database using the command line."""
     # TODO: prevent this from being done on production
-    initdb()
+    init_db()
     print('Initialized the database.')
