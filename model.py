@@ -1,6 +1,7 @@
 from peewee import *
 import os
 from datetime import datetime, timedelta
+from flask import abort
 
 db = Proxy()
 # Get full path of database
@@ -48,13 +49,13 @@ class Client(BaseModel):
         try:
             client = Client.get(Client.public_token == public_token)
         except Client.DoesNotExist:
-            return None
+            abort(404)
         if date is None:
             logs = Location.select().where(Location.client == client).order_by(Location.date_created.desc())
         else:
             logs = Location.select().where(Location.client == client & Location.date_created.between(
-                datetime.today() - timedelta(days=1),
-                datetime.today())
+                date,
+                date + timedelta(days=1))
             ).order_by(Location.date_created.desc())
             print("Getting logs for " + str(date))
         return client.date_first_seen, client.date_last_seen, logs

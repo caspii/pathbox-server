@@ -1,4 +1,6 @@
-from flask import Flask, request
+from flask import Flask, request, abort
+
+
 from model import init_db, Location, Client
 import urllib.parse
 from datetime import datetime
@@ -9,12 +11,11 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    # log_request(request)
     return "Hello World!"
 
 
 @app.route("/v1/")
-def save_location():
+def log_location():
     log_request(request)
     return "Hello World!"
 
@@ -22,7 +23,7 @@ def save_location():
 @app.route("/view/<public_token>/<date_str>")
 @app.route("/view/<public_token>")
 def view_username(public_token, date_str=None):
-    if date_str is not None:
+    if date_str:
         date = datetime.strptime(date_str, "%Y-%m-%d")
     else:
         date = None
