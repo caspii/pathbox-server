@@ -1,7 +1,6 @@
 from peewee import *
 import os
-from datetime import datetime
-
+from datetime import datetime, timedelta
 
 db = Proxy()
 # Get full path of database
@@ -52,6 +51,12 @@ class Client(BaseModel):
             return None
         if date is None:
             logs = Location.select().where(Location.client == client).order_by(Location.date_created.desc())
+        else:
+            logs = Location.select().where(Location.client == client & Location.date_created.between(
+                datetime.today() - timedelta(days=1),
+                datetime.today())
+            ).order_by(Location.date_created.desc())
+            print("Getting logs for " + str(date))
         return client.date_first_seen, client.date_last_seen, logs
 
 

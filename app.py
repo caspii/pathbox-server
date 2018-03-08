@@ -23,7 +23,7 @@ def save_location():
 @app.route("/view/<public_token>")
 def view_username(public_token, date_str=None):
     if date_str is not None:
-        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        date = datetime.strptime(date_str, "%Y-%m-%d")
     else:
         date = None
     first_seen, last_seen, logs = Client.get_logs(public_token, date)
