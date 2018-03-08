@@ -33,17 +33,19 @@ class Client(BaseModel):
         try:
             client = Client.get(Client.public_token == public_token)
             print('Found client')
+            if client.secret_token != secret_token:
+                print('Wrong secret provided')
+                return None
         except Client.DoesNotExist:
-            # No client found
-            print('Creating new client + ' + secret_token)
+            # Client not seen before<<>
+            print('Creating new client + ' + public_token)
             now = datetime.now()
             client = Client.create(secret_token=secret_token, public_token=public_token, client_name=client_name,
                                    date_first_seen=now, date_last_seen=now)
         return client
 
     def log_location(self, latitude, longitude, date):
-        print('Creating a log, wot? For client ' + str(self.id))
-
+        print('Creating a log for client ' + self.public_token)
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date,
                         date_logged=datetime.now())
         self.date_last_seen = datetime.now()

@@ -40,10 +40,11 @@ def log_request(request):
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
         print("New log from : " + public_token + " Date: " + str(date))
         print("----")
-        client = Client.fetch(public_token, secret_token)
-        client.log_location(latitude=latitude, longitude=longitude, date=date)
     except AttributeError as e:
         print("Request cannot be parsed: " + str(e))
+    client = Client.fetch(public_token, secret_token)
+    if client:
+        client.log_location(latitude=latitude, longitude=longitude, date=date)
 
 
 @app.cli.command('initdb')
