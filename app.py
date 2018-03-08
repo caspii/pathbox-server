@@ -1,17 +1,16 @@
 from flask import Flask, request
-from model import initdb, Location
+from model import initdb, Location, Client
 import urllib.parse
 from datetime import datetime
 
 
-
 app = Flask(__name__)
+
 
 @app.route("/")
 def hello():
     # log_request(request)
     return "Hello World!"
-
 
 
 @app.route("/v1/")
@@ -33,19 +32,18 @@ def view_username(username):
 def log_request(request):
     latitude = request.args.get('latitude')
     longitude = request.args.get('longitude')
-    username = request.args.get('username')
-    sessionid = request.args.get('sessionid')
-
+    public_token = request.args.get('username')
+    secret_token = request.args.get('sessionid')
+    print(request)
     try:
-        print(request.args.get('date'))
         date_str = urllib.parse.unquote(request.args.get('date'))
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
-        print("New log from : " + username + " Date: " + str(date))
+        print("New log from : " + public_token + " Date: " + str(date))
         print("----")
-        location = Location(latitude=latitude, longitude=longitude, username=username, date=date)
-        location.save()
-    except (AttributeError):
-        print("Date not parseable")
+        client = Client.fetch(public_token, secret_token)
+        client.log_location(latitude=latitude, longitude=longitude, date=date)
+    except AttributeError as e:
+        print("Request cannot be parsed: " + str(e))
 
 
 @app.cli.command('initdb')
