@@ -3,7 +3,7 @@
 from peewee import *
 import requests
 import urllib.parse
-import urllib
+
 
 PUBLIC_TOKEN='caspii'
 SECRET_TOKEN='secret'
