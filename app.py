@@ -1,4 +1,4 @@
-from flask import Flask, request, abort
+from flask import Flask, request, abort, render_template
 
 
 from model import init_db, Location, Client
@@ -11,7 +11,13 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    return "Hello World!"
+    coords = [
+          {'lat': 37.772, 'lng': -122.214},
+          {'lat': 21.291, 'lng': -157.821},
+          {'lat': -18.142, 'lng': 178.431},
+          {'lat': -27.467, 'lng': 153.027}
+        ]
+    return render_template('map.html', coords=coords)
 
 
 @app.route("/v1/")

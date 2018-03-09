@@ -7,6 +7,13 @@ A client request looks like this:
 
 `localhost:5000/view/?latitude=X&longitude=Y&username=Z&sessionid=A`
 
+## Temporary bookmarks
+
+Google maps API Key: AIzaSyD4p2Lv9o1Wgo-owLJ6xGLtVL9DEBzG2fU
+
+http://www.jacquet80.eu/blog/post/2011/02/Display-GPX-tracks-using-Google-Maps-API
+
+
 # Setup development environment 💻
 1. Install packages:
    * On Ubuntu: `sudo apt install python-pip python-virtualenv python-dev memcached`
