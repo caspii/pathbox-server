@@ -60,10 +60,6 @@ class Client(BaseModel):
             print("Getting logs for " + str(date))
         return client.date_first_seen, client.date_last_seen, logs
 
-
-
-        pass
-
     def add_log_entry(self, latitude, longitude, date):
         print('Creating a log for client ' + self.public_token)
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date,
@@ -77,8 +73,8 @@ class Location(BaseModel):
     Class representing a location log entry
     """
     client = ForeignKeyField(Client)
-    latitude = CharField()
-    longitude = CharField()
+    latitude = FloatField()
+    longitude = FloatField()
     date_created = DateTimeField()       # Date that client created log entry
     date_logged = DateTimeField()        # Date that client sent location to server
 

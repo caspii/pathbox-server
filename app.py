@@ -59,7 +59,7 @@ def log_request(request):
         print("Request cannot be parsed: " + str(e))
     client = Client.fetch(public_token, secret_token)
     if client:
-        client.add_log_entry(latitude=latitude, longitude=longitude, date=date)
+        client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date)
 
 
 @app.cli.command('init_db')
