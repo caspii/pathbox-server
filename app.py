@@ -1,12 +1,20 @@
 from flask import Flask, request, abort, render_template
-
-
 from model import init_db, Location, Client
 import urllib.parse
 from datetime import datetime
+from lib import humantime
 
 
 app = Flask(__name__)
+
+
+def human_time(value):
+    """Allow pretty dates via jinja2 filter"""
+    return humantime.pretty_date(value)
+
+
+app.jinja_env.filters['human_time'] = human_time
+
 
 
 @app.route("/")

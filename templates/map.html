@@ -23,8 +23,8 @@
   </head>
   <body>
     <h1>See where I went today</h1>
-    <p>First seen on <span class="badge badge-pill badge-primary">{{client.date_first_seen}}</span></p>
-    <p>Last seen on <span class="badge badge-pill badge-primary">{{client.date_last_seen}}</span></p>
+    <p>First seen on <span class="badge badge-pill badge-primary">{{client.date_first_seen | human_time}}</span></p>
+    <p>Last seen on <span class="badge badge-pill badge-primary">{{client.date_last_seen | human_time}}</span></p>
     <div id="map"></div>
     <script>
        var coords = {{ coords|safe }}
