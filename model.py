@@ -58,7 +58,7 @@ class Client(BaseModel):
                 date + timedelta(days=1))
             ).order_by(Location.date_created.desc())
             print("Getting logs for " + str(date))
-        return client.date_first_seen, client.date_last_seen, logs
+        return client, logs
 
     def add_log_entry(self, latitude, longitude, date):
         print('Creating a log for client ' + self.public_token)

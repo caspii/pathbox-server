@@ -28,10 +28,10 @@ def view_username(public_token, date_str=None, raw=None):
         date = datetime.strptime(date_str, "%Y-%m-%d")
     else:
         date = None
-    first_seen, last_seen, logs = Client.get_logs(public_token, date)
+    client, logs = Client.get_logs(public_token, date)
 
-    output = "Hello " + public_token + '<br>'
-    output += "First seen: %s, last seen %s <br>" %(first_seen, last_seen)
+    output = "Hello " + public_token + '<br><br>'
+    output += "First seen: %s, last seen %s <br><br>" %(client.date_first_seen, client.date_last_seen)
 
     coords = []
     for log in logs:
@@ -41,7 +41,7 @@ def view_username(public_token, date_str=None, raw=None):
     if raw:
         return output
     else:
-        return render_template('map.html', coords=coords)
+        return render_template('map.html', coords=coords, client=client)
 
 
 def log_request(request):
