@@ -48,7 +48,8 @@ def log_request(request):
     latitude = request.args.get('latitude')
     longitude = request.args.get('longitude')
     public_token = request.args.get('username')
-    secret_token = request.args.get('sessionid')
+    secret_token = request.args.get('username') # This is a terrible hack TODO: revert this
+    # secret_token = request.args.get('sessionid')
     #print(request)
     try:
         date_str = urllib.parse.unquote(request.args.get('date'))

@@ -6,7 +6,7 @@ import urllib.parse
 
 
 PUBLIC_TOKEN='caspii'
-SECRET_TOKEN='secret'
+SECRET_TOKEN='caspii'
 TARGET_SERVER='http://localhost:5000'
 REQUEST_URL="/v1/?latitude=%s&longitude=%s&username=%s&sessionid=%s&date=%s"
 
