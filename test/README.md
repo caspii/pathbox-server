@@ -1,6 +1,8 @@
 # Testing
 Testing is awesome
 
- TODO
+### TODO
+The following scenarios need tests:
  * wrong secret for existing client
  * Client name change
+ * Malformed or missing request parameters
