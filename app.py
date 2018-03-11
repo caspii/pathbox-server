@@ -11,13 +11,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def hello():
-    coords = [
-          {'lat': 37.772, 'lng': -122.214},
-          {'lat': 21.291, 'lng': -157.821},
-          {'lat': -18.142, 'lng': 178.431},
-          {'lat': -27.467, 'lng': 153.027}
-        ]
-    return render_template('map.html', coords=coords)
+    return "Hello world"
 
 
 @app.route("/v1/")
@@ -27,8 +21,9 @@ def log_location():
 
 
 @app.route("/view/<public_token>/<date_str>")
+@app.route("/view/<public_token>/<date_str>/<raw>")
 @app.route("/view/<public_token>")
-def view_username(public_token, date_str=None):
+def view_username(public_token, date_str=None, raw=None):
     if date_str:
         date = datetime.strptime(date_str, "%Y-%m-%d")
     else:
@@ -43,9 +38,10 @@ def view_username(public_token, date_str=None):
         output += str(log.date_created) + '<br>'
         coords.append({'lat': float(log.latitude), 'lng': float(log.longitude)})
     print(coords)
-    return render_template('map.html', coords=coords)
-    #
-    # return output
+    if raw:
+        return output
+    else:
+        return render_template('map.html', coords=coords)
 
 
 def log_request(request):
@@ -53,7 +49,7 @@ def log_request(request):
     longitude = request.args.get('longitude')
     public_token = request.args.get('username')
     secret_token = request.args.get('sessionid')
-    print(request)
+    #print(request)
     try:
         date_str = urllib.parse.unquote(request.args.get('date'))
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
