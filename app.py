@@ -38,9 +38,14 @@ def view_username(public_token, date_str=None):
     output = "Hello " + public_token + '<br>'
     output += "First seen: %s, last seen %s <br>" %(first_seen, last_seen)
 
+    coords = []
     for log in logs:
         output += str(log.date_created) + '<br>'
-    return output
+        coords.append({'lat': float(log.latitude), 'lng': float(log.longitude)})
+    print(coords)
+    return render_template('map.html', coords=coords)
+    #
+    # return output
 
 
 def log_request(request):
