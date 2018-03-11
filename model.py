@@ -35,7 +35,7 @@ class Client(BaseModel):
             print('Found client')
             if client.secret_token != secret_token:
                 print('Wrong secret provided')
-                return None
+                abort(405)
         except Client.DoesNotExist:
             # Client not seen before<<>
             print('Creating new client + ' + public_token)
