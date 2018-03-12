@@ -45,7 +45,6 @@ def view_username(public_token, date_str=None, raw=None):
     for log in logs:
         output += str(log.date_created) + '<br>'
         coords.append({'lat': float(log.latitude), 'lng': float(log.longitude)})
-    print(coords)
     if raw:
         return output
     else:
