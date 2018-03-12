@@ -17,7 +17,7 @@ http://www.jacquet80.eu/blog/post/2011/02/Display-GPX-tracks-using-Google-Maps-A
 # Setup development environment 💻
 1. Install packages:
    * On Ubuntu: `sudo apt install python-pip python-virtualenv python-dev memcached`
-   * On Mac OSX: `brew install bower pyenv-virtualenv memcached`
+   * On Mac OSX: `brew install bower pyenv-virtualenv`
 1. Create virtual environment: `virtualenv -p python3 venv`
 1. Enter virtualenv with `. venv/bin/activate`
 1. `pip install -r requirements.txt`
