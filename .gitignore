@@ -3,3 +3,4 @@ venv
 .idea/
 *db
 database.db-journal
+.DS_Store
