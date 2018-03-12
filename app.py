@@ -35,7 +35,7 @@ def view_username(public_token, date_str=None, raw=None):
     if date_str:
         date = datetime.strptime(date_str, "%Y-%m-%d")
     else:
-        date = None
+        date = datetime.now().date()
     client, logs = Client.get_logs(public_token, date)
 
     output = "Hello " + public_token + '<br><br>'
