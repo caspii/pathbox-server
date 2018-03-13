@@ -7,3 +7,4 @@ The following scenarios need tests:
  * Client name change
  * Malformed or missing request parameters
  * First seen / last see
+ * No coordinates for a particular day
