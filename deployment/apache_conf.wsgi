@@ -7,10 +7,10 @@ import logging
 ADMINS = ['caspar.wrede@gmail.com']
 CREDENTIALS = ('postmaster@mg.casparwre.de', 'e7fdb46aa807dabf10e3f1bd96b31022')
 
-activate_this = '/var/www/keepthescore.co/venv/bin/activate_this.py'
+activate_this = '/var/www/loc.b3rlin.net/venv/bin/activate_this.py'
 execfile(activate_this, dict(__file__=activate_this))
 logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/var/www/keepthescore.co/")
+sys.path.insert(0,"/var/www/loc.b3rlin.net/")
 from logging.handlers import SMTPHandler
 mail_handler = SMTPHandler('smtp.mailgun.org',
                            'postmaster@mg.casparwre.de',
