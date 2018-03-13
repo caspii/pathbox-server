@@ -7,4 +7,5 @@ The following scenarios need tests:
  * Client name change
  * Malformed or missing request parameters
  * First seen / last see
- * No coordinates for a particular day
+ * No coordinates for a particular day (emtpy state). Date in the future
+ * Pagination 
