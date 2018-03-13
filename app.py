@@ -1,7 +1,7 @@
 from flask import Flask, request, abort, render_template
-from model import init_db, Location, Client
+from model import init_db, Client
 import urllib.parse
-from datetime import datetime
+from datetime import datetime, timedelta
 from lib import humantime
 
 
@@ -30,10 +30,10 @@ def log_location():
 
 @app.route("/view/<public_token>/<date_str>")
 @app.route("/view/<public_token>/<date_str>/<raw>")
-@app.route("/view/<public_token>")
+@app.route("/view/<public_token>/")
 def view_username(public_token, date_str=None, raw=None):
     if date_str:
-        date = datetime.strptime(date_str, "%Y-%m-%d")
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
     else:
         date = datetime.now().date()
     client, logs = Client.get_logs(public_token, date)
@@ -48,7 +48,14 @@ def view_username(public_token, date_str=None, raw=None):
     if raw:
         return output
     else:
-        return render_template('map.html', coords=coords, client=client)
+        day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")  # Generate link for previous day
+        day_after = (date + timedelta(days=1))                    # Generate link for next day
+        if day_after > datetime.now().date():                                # Don't allow dates in the future
+            day_after = None
+        else:
+            day_after = day_after.strftime("%Y-%m-%d")
+        return render_template('map.html', coords=coords, client=client,
+                               date=date.strftime("%B %d, %Y"), day_before=day_before, day_after=day_after)
 
 
 def log_request(request):
