@@ -25,7 +25,7 @@ def hello():
 @app.route("/v1/")
 def log_location():
     log_request(request)
-    return "Hello World!"
+    return "You did it"
 
 
 @app.route("/view/<public_token>/<date_str>")
