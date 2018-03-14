@@ -22,26 +22,23 @@ class Client(BaseModel):
     """
     secret_token = CharField(unique=True)   # Created by client, required to log an entry
     public_token = CharField(unique=True)   # Created by client, visible in web URL
-    date_first_seen = DateTimeField()
-    date_last_seen = DateTimeField()
+    date_first_seen = DateTimeField(default=datetime.now)
+    date_last_seen = DateTimeField(default=datetime.now)
     client_name = CharField(null=True)
     client_description = CharField(null=True)
 
     @classmethod
     def fetch(cls, public_token, secret_token, client_name=None):
-        print("Fetching: " + public_token)
         try:
             client = Client.get(Client.public_token == public_token)
-            print('Found client')
+            print('Found client: ' + public_token)
             if client.secret_token != secret_token:
                 print('Wrong secret provided')
                 abort(405)
         except Client.DoesNotExist:
             # Client not seen before<<>
             print('Creating new client + ' + public_token)
-            now = datetime.now()
-            client = Client.create(secret_token=secret_token, public_token=public_token, client_name=client_name,
-                                   date_first_seen=now, date_last_seen=now)
+            client = Client.create(secret_token=secret_token, public_token=public_token, client_name=client_name)
         return client
 
     @classmethod
@@ -53,15 +50,16 @@ class Client(BaseModel):
         if date is None:
             logs = Location.select().where(Location.client == client).order_by(Location.date_created.desc())
         else:
-            logs = Location.select().where(Location.client == client & Location.date_created.between(
+            logs = Location.select().where((Location.client == client) &
+               (Location.date_created.between(
                 date,
-                date + timedelta(days=1))
-            ).order_by(Location.date_created.desc())
-            print("Getting logs for " + str(date))
+                date + timedelta(days=1))))\
+                .order_by(Location.date_created.desc())
+        print("Fetched logs: " + str(len(logs)))
         return client, logs
 
     def add_log_entry(self, latitude, longitude, date):
-        print('Creating a log for client ' + self.public_token)
+        print('Logging for client ' + self.public_token)
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date,
                         date_logged=datetime.now())
         self.date_last_seen = datetime.now()

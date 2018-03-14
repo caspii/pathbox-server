@@ -29,7 +29,6 @@ def log_location():
 
 
 @app.route("/view/<public_token>/<date_str>")
-@app.route("/view/<public_token>/<date_str>/<raw>")
 @app.route("/view/<public_token>/")
 def view_username(public_token, date_str=None, raw=None):
     if date_str:
@@ -38,15 +37,9 @@ def view_username(public_token, date_str=None, raw=None):
         date = datetime.now().date()
     client, logs = Client.get_logs(public_token, date)
 
-    output = "Hello " + public_token + '<br><br>'
-    output += "First seen: %s, last seen %s <br><br>" %(client.date_first_seen, client.date_last_seen)
-
     coords = []
     for log in logs:
-        output += str(log.date_created) + '<br>'
         coords.append({'lat': float(log.latitude), 'lng': float(log.longitude)})
-    if raw:
-        return output
     else:
         day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")  # Generate link for previous day
         day_after = (date + timedelta(days=1))                    # Generate link for next day
@@ -56,6 +49,15 @@ def view_username(public_token, date_str=None, raw=None):
             day_after = day_after.strftime("%Y-%m-%d")
         return render_template('map.html', coords=coords, client=client,
                                date=date.strftime("%B %d, %Y"), day_before=day_before, day_after=day_after)
+
+
+@app.route("/debug/<public_token>/")
+def debug(public_token):
+    client, logs = Client.get_logs(public_token)
+    output = "<h1>Raw log dump</h2>"
+    for log in logs:
+        output += "%s: Lat: %s Lon: %s Accuracy: <br>" % ( str(log.date_created), log.latitude, log.longitude)
+    return output
 
 
 def log_request(request):
