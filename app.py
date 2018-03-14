@@ -68,10 +68,12 @@ def log_request(request):
     try:
         date_str = urllib.parse.unquote(request.args.get('date'))
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
-        print("New log from : " + public_token + " Date: " + str(date))
-        print("----")
     except AttributeError as e:
-        print("Request cannot be parsed: " + str(e))
+        print("Date cannot be parsed: " + str(e))
+    except TypeError: # TODO: This was added to test GPSLogeger App. Should probably be removed
+        date = datetime.now()
+    print("New log from : " + public_token + " Date: " + str(date))
+    print("----")
     client = Client.fetch(public_token, secret_token)
     if client:
         client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date)
