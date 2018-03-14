@@ -58,10 +58,9 @@ class Client(BaseModel):
         print("Fetched logs: " + str(len(logs)))
         return client, logs
 
-    def add_log_entry(self, latitude, longitude, date):
+    def add_log_entry(self, latitude, longitude, date, accuracy):
         print('Logging for client ' + self.public_token)
-        Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date,
-                        date_logged=datetime.now())
+        Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date, accuracy=accuracy)
         self.date_last_seen = datetime.now()
         self.save()
 
@@ -73,8 +72,9 @@ class Location(BaseModel):
     client = ForeignKeyField(Client)
     latitude = FloatField()
     longitude = FloatField()
-    date_created = DateTimeField()       # Date that client created log entry
-    date_logged = DateTimeField()        # Date that client sent location to server
+    accuracy = FloatField()
+    date_created = DateTimeField()                      # Date that client created log entry
+    date_logged = DateTimeField(default=datetime.now)   # Date that client sent location to server
 
 
 def init_db():

@@ -56,13 +56,15 @@ def debug(public_token):
     client, logs = Client.get_logs(public_token)
     output = "<h1>Raw log dump</h2>"
     for log in logs:
-        output += "%s: Lat: %s Lon: %s Accuracy: <br>" % ( str(log.date_created), log.latitude, log.longitude)
+        output += "%s: (logged: %s) Lat: %s Lon: %s Accuracy: %s<br>" % (str(log.date_created), str(log.date_logged),
+                                                                         log.latitude, log.longitude, log.accuracy)
     return output
 
 
 def log_request(request):
     latitude = request.args.get('latitude')
     longitude = request.args.get('longitude')
+    accuracy = request.args.get('accuracy')
     public_token = request.args.get('username')
     secret_token = request.args.get('username') # This is a terrible hack TODO: revert this
     # secret_token = request.args.get('sessionid')
@@ -72,13 +74,13 @@ def log_request(request):
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
     except AttributeError as e:
         print("Date cannot be parsed: " + str(e))
-    except TypeError: # TODO: This was added to test GPSLogeger App. Should probably be removed
+    except TypeError: # TODO: This was added to test GPSLogger App. Should probably be removed
         date = datetime.now()
     print("New log from : " + public_token + " Date: " + str(date))
     print("----")
     client = Client.fetch(public_token, secret_token)
     if client:
-        client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date)
+        client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date, accuracy=float(accuracy))
 
 
 @app.cli.command('init_db')
