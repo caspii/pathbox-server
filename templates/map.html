@@ -44,27 +44,49 @@
     <div id="map"></div>
     <script>
             var coords = {{ coords|safe }}
-              function initMap() {
-                var map = new google.maps.Map(document.getElementById('map'), {
-                  zoom: 3
-                });
+            function initMap() {
+              var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 3
+              });
 
-                var bounds = new google.maps.LatLngBounds();
-                  for (var i = 0; i < coords.length; i++) {
-                  bounds.extend(coords[i]);
-                }
-
-                var tracks = new google.maps.Polyline({
-                  path: coords,
-                  geodesic: true,
-                  strokeColor: '#FF0000',
-                  strokeOpacity: 1.0,
-                  strokeWeight: 2
-                });
-
-                tracks.setMap(map);
-                map.fitBounds(bounds);
+              var bounds = new google.maps.LatLngBounds();
+                for (var i = 0; i < coords.length; i++) {
+                bounds.extend(coords[i]);
               }
+
+              var tracks = new google.maps.Polyline({
+                path: coords,
+                geodesic: true,
+                strokeColor: '#2E64FE',
+                strokeOpacity: 0.8,
+                strokeWeight: 5
+              });
+
+              var image = {
+                url:  '{{url_for('static', filename='blue_dot.svg')}}',
+                //size: new google.maps.Size(50, 50),
+                scaledSize: new google.maps.Size(20, 20),
+                origin: new google.maps.Point(0, 0),
+                anchor: new google.maps.Point(10, 10)
+              };
+
+              for (var i = 0; i < coords.length; i++) {
+                var marker = new google.maps.Marker({
+                  position: coords[i],
+                  map: map,
+                  title: coords[i].title,
+                  icon: image,
+                  zIndex: -200
+
+                });
+              }
+
+
+
+
+              tracks.setMap(map);
+              map.fitBounds(bounds);
+             }
         </script>
     {% endif %}
     <!-- Optional JavaScript -->

@@ -2,19 +2,13 @@ from flask import Flask, request, abort, render_template
 from model import init_db, Client
 import urllib.parse
 from datetime import datetime, timedelta
-from lib import humantime
+from lib.humantime import pretty_date
 
 
 app = Flask(__name__)
 
-
-def human_time(value):
-    """Allow pretty dates via jinja2 filter"""
-    return humantime.pretty_date(value)
-
-
-app.jinja_env.filters['human_time'] = human_time
-
+# Allow pretty dates via jinja2 filter
+app.jinja_env.filters['human_time'] = pretty_date
 
 
 @app.route("/")
@@ -39,7 +33,8 @@ def view_username(public_token, date_str=None, raw=None):
 
     coords = []
     for log in logs:
-        coords.append({'lat': float(log.latitude), 'lng': float(log.longitude)})
+        coords.append({'lat': float(log.latitude), 'lng': float(log.longitude),
+                       'title': log.date_created.strftime("Here at %H:%M")})
     else:
         day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")  # Generate link for previous day
         day_after = (date + timedelta(days=1))                    # Generate link for next day
