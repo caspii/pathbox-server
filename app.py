@@ -13,7 +13,7 @@ app.jinja_env.filters['human_time'] = pretty_date
 
 @app.route("/")
 def hello():
-    return "Hello world"
+    return render_template('landing.html')
 
 
 @app.route("/v1/")
