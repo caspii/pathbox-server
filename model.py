@@ -58,10 +58,11 @@ class Client(BaseModel):
         print("Fetched logs: " + str(len(logs)))
         return client, logs
 
-    def add_log_entry(self, latitude, longitude, date, accuracy):
+    def add_log_entry(self, latitude, longitude, date, accuracy, clientname=None):
         print('Logging for client ' + self.public_token)
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date, accuracy=accuracy)
         self.date_last_seen = datetime.now()
+        self.client_name=clientname
         self.save()
 
 

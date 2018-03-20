@@ -23,11 +23,8 @@
     </style>
   </head>
   <body>
-    <h1>My tracks</h1>
-    <p><span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
-        <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}</p>
-    <p><span class="text-muted">Showing tracks for</span> {{date}}</p>
-    <p>
+    <h1>Tracks for {{date}}</h1>
+     <p>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_before)}}"
            class="btn btn-primary active" role="button" aria-pressed="true">Show day before</a>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_after)}}"
@@ -38,55 +35,59 @@
            disabled
            {% endif %}
            " role="button" aria-pressed="true">Show day after</a> </p>
+    <p><span class="text-muted">Name of device</span> {{client.client_name}},
+    <span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
+    <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}</p>
+
     {% if coords|length == 0 %}
     <div id="map"><h3 class="text-center mt-5 text-muted">Sorry, there is no data for this day 👻</h3></div>
     {% else %}
     <div id="map"></div>
     <script>
-            var coords = {{ coords|safe }}
+        var coords = {{ coords|safe }}
             function initMap() {
-              var map = new google.maps.Map(document.getElementById('map'), {
-                zoom: 3
-              });
-
-              var bounds = new google.maps.LatLngBounds();
-                for (var i = 0; i < coords.length; i++) {
-                bounds.extend(coords[i]);
-              }
-
-              var tracks = new google.maps.Polyline({
-                path: coords,
-                geodesic: true,
-                strokeColor: '#2E64FE',
-                strokeOpacity: 0.8,
-                strokeWeight: 5
-              });
-
-              var image = {
-                url:  '{{url_for('static', filename='blue_dot.svg')}}',
-                //size: new google.maps.Size(50, 50),
-                scaledSize: new google.maps.Size(20, 20),
-                origin: new google.maps.Point(0, 0),
-                anchor: new google.maps.Point(10, 10)
-              };
-
-              for (var i = 0; i < coords.length; i++) {
-                var marker = new google.maps.Marker({
-                  position: coords[i],
-                  map: map,
-                  title: coords[i].title,
-                  icon: image,
-                  zIndex: -200
-
+                var map = new google.maps.Map(document.getElementById('map'), {
+                    zoom: 3
                 });
-              }
+
+                var bounds = new google.maps.LatLngBounds();
+                    for (var i = 0; i < coords.length; i++) {
+                    bounds.extend(coords[i]);
+                }
+
+                var tracks = new google.maps.Polyline({
+                    path: coords,
+                    geodesic: true,
+                    strokeColor: '#2E64FE',
+                    strokeOpacity: 0.8,
+                    strokeWeight: 5
+                });
+
+                var image = {
+                    url:  '{{url_for('static', filename='blue_dot.svg')}}',
+
+                    scaledSize: new google.maps.Size(20, 20),
+                    origin: new google.maps.Point(0, 0),
+                    anchor: new google.maps.Point(10, 10)
+                };
+
+                for (var i = 0; i < coords.length; i++) {
+                    var marker = new google.maps.Marker({
+                    position: coords[i],
+                    map: map,
+                    title: coords[i].title,
+                    icon: image,
+                    zIndex: -200
+
+                    });
+                }
 
 
 
 
-              tracks.setMap(map);
-              map.fitBounds(bounds);
-             }
+                tracks.setMap(map);
+                map.fitBounds(bounds);
+            }
         </script>
     {% endif %}
     <!-- Optional JavaScript -->

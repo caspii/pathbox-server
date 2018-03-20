@@ -36,9 +36,9 @@ def view_username(public_token, date_str=None, raw=None):
         coords.append({'lat': float(log.latitude), 'lng': float(log.longitude),
                        'title': log.date_created.strftime("Here at %H:%M")})
     else:
-        day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")  # Generate link for previous day
-        day_after = (date + timedelta(days=1))                    # Generate link for next day
-        if day_after > datetime.now().date():                                # Don't allow dates in the future
+        day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")    # Generate link for previous day
+        day_after = (date + timedelta(days=1))                          # Generate link for next day
+        if day_after > datetime.now().date():                           # Don't allow dates in the future
             day_after = None
         else:
             day_after = day_after.strftime("%Y-%m-%d")
@@ -63,6 +63,7 @@ def log_request(request):
     public_token = request.args.get('username')
     secret_token = request.args.get('username') # This is a terrible hack TODO: revert this
     # secret_token = request.args.get('sessionid')
+    clientname = request.args.get('clientname')
     #print(request)
     try:
         date_str = urllib.parse.unquote(request.args.get('date'))
@@ -75,7 +76,8 @@ def log_request(request):
     print("----")
     client = Client.fetch(public_token, secret_token)
     if client:
-        client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date, accuracy=float(accuracy))
+        client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date, accuracy=float(accuracy),
+                             clientname=clientname)
 
 
 @app.cli.command('init_db')
