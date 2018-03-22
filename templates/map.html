@@ -1,29 +1,9 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <!-- Required meta tags -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <title>My Tracks</title>
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <style>
-      /* Always set the map height explicitly to define the size of the div
-       * element that contains the map. */
-      #map {
-        height: 100%;
-      }
-      /* Optional: Makes the sample page fill the window. */
-      html, body {
-        height: 80%;
-        margin: 0;
-        padding: 0;
-      }
-    </style>
-  </head>
-  <body>
-    <h1>Tracks for {{date}}</h1>
+{% extends "layout.html" %}
+{% block title %}{{ date }} - Location tracker{% endblock %}
+{% block body %}
+<div class="container">
+
+<h3 class="mt-2">Tracks for {{date}}</h3>
      <p>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_before)}}"
            class="btn btn-primary active" role="button" aria-pressed="true">Show day before</a>
@@ -38,11 +18,15 @@
     <p><span class="text-muted">Name of device</span> {{client.client_name}},
     <span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
     <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}</p>
-
+    </div>
     {% if coords|length == 0 %}
     <div id="map"><h3 class="text-center mt-5 text-muted">Sorry, there is no data for this day 👻</h3></div>
     {% else %}
-    <div id="map"></div>
+    <div class="embed-responsive embed-responsive-4by3">
+        <div id="map-container" class="embed-responsive-item">
+            <div id="map"></div>
+        </div>
+    </div>
     <script>
         var coords = {{ coords|safe }}
             function initMap() {
@@ -66,9 +50,9 @@
                 var image = {
                     url:  '{{url_for('static', filename='blue_dot.svg')}}',
 
-                    scaledSize: new google.maps.Size(15, 15),
+                    scaledSize: new google.maps.Size(16, 16),
                     origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(10, 10)
+                    anchor: new google.maps.Point(8, 8)
                 };
 
                 for (var i = 0; i < coords.length; i++) {
@@ -92,13 +76,10 @@
     {% endif %}
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     {% if coords|length != 0 %}
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4p2Lv9o1Wgo-owLJ6xGLtVL9DEBzG2fU&callback=initMap">
     </script>
     {% endif %}
-  </body>
-</html>
+
+{% endblock %}
