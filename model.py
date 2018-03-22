@@ -2,6 +2,7 @@ from peewee import *
 import os
 from datetime import datetime, timedelta
 from flask import abort
+import gpxpy.geo
 
 db = Proxy()
 # Get full path of database
@@ -9,7 +10,10 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 database = os.path.join(basedir, 'database.db')
 db.initialize(SqliteDatabase(database))
 ########################################################################
-
+# Filter variables
+# Determins what locations are discarded
+ACCURACY_THRESHOLD = 100
+DISTANCE_THRESHOLD = 10
 
 class BaseModel(Model):
     class Meta:
@@ -43,6 +47,7 @@ class Client(BaseModel):
 
     @classmethod
     def get_logs(cls, public_token, date=None):
+        """Return a filtered list of location logs."""
         try:
             client = Client.get(Client.public_token == public_token)
         except Client.DoesNotExist:
@@ -55,8 +60,24 @@ class Client(BaseModel):
                 date,
                 date + timedelta(days=1))))\
                 .order_by(Location.date_created.desc())
-        print("Fetched logs: " + str(len(logs)))
-        return client, logs
+        # Filter the logs
+        filtered_logs = [log for log in logs if log.accuracy < ACCURACY_THRESHOLD ]
+        previous = None
+        for log in logs:
+            # if log
+            #filtered_log = vars(log)['__data__'] # Turn object into dict
+            #if filtered_log['accuracy']
+            if previous is None:
+                print('continuing')
+                previous = log
+                continue
+            dist = gpxpy.geo.haversine_distance(previous.latitude, previous.longitude, log.latitude, log.longitude)
+            # print('Distance = ' + str(dist))
+            previous = log
+            #log['distance_moved'] = dist
+        print("Unfiltered logs: " + str(len(logs)))
+        print("Filtered logs: " + str(len(filtered_logs)))
+        return client, filtered_logs
 
     def add_log_entry(self, latitude, longitude, date, accuracy, clientname=None):
         print('Logging for client ' + self.public_token)
