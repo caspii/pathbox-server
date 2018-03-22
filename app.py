@@ -3,6 +3,7 @@ from model import init_db, Client
 import urllib.parse
 from datetime import datetime, timedelta
 from lib.humantime import pretty_date
+import json
 
 
 app = Flask(__name__)
@@ -24,39 +25,37 @@ def log_location():
 
 @app.route("/view/<public_token>/<date_str>")
 @app.route("/view/<public_token>/")
-def view_username(public_token, date_str=None, raw=None):
+def view_username(public_token, date_str=None):
     if date_str:
         date = datetime.strptime(date_str, "%Y-%m-%d").date()
     else:
         date = datetime.now().date()
     client, logs = Client.get_logs(public_token, date)
 
-    coords = []
-    for log in logs:
-        coords.append({'lat': float(log.latitude), 'lng': float(log.longitude),
-                       'title': log.date_created.strftime("Here at %H:%M")})
+    day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")    # Generate link for previous day
+    day_after = (date + timedelta(days=1))                          # Generate link for next day
+    if day_after > datetime.now().date():                           # Don't allow dates in the future
+        day_after = None
     else:
-        day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")    # Generate link for previous day
-        day_after = (date + timedelta(days=1))                          # Generate link for next day
-        if day_after > datetime.now().date():                           # Don't allow dates in the future
-            day_after = None
-        else:
-            day_after = day_after.strftime("%Y-%m-%d")
-        return render_template('map.html', coords=coords, client=client,
-                               date=date.strftime("%B %d, %Y"), day_before=day_before, day_after=day_after)
+        day_after = day_after.strftime("%Y-%m-%d")
+    return render_template('map.html', coords=logs, client=client,
+                           date=date.strftime("%B %d, %Y"), day_before=day_before, day_after=day_after)
 
 
-@app.route("/debug/<public_token>/")
-def debug(public_token):
-    client, logs = Client.get_logs(public_token)
+@app.route("/debug/<public_token>/<date_str>")
+def debug(public_token, date_str=None):
+    """"Output all logs as JSON dump for debugging purposes"""
+    if date_str:
+        date = datetime.strptime(date_str, "%Y-%m-%d").date()
+    client, logs = Client.get_logs(public_token, date)
     output = "<h1>Raw log dump</h2>"
     for log in logs:
-        output += "%s: (logged: %s) Lat: %s Lon: %s Accuracy: %s<br>" % (str(log.date_created), str(log.date_logged),
-                                                                         log.latitude, log.longitude, log.accuracy)
+        output += json.dumps(log) + '<br>'
     return output
 
 
 def log_request(request):
+    """Write incoming request data to the database"""
     latitude = request.args.get('latitude')
     longitude = request.args.get('longitude')
     accuracy = request.args.get('accuracy')

@@ -12,8 +12,8 @@ db.initialize(SqliteDatabase(database))
 ########################################################################
 # Filter variables
 # Determins what locations are discarded
-ACCURACY_THRESHOLD = 100
-DISTANCE_THRESHOLD = 10
+ACCURACY_THRESHOLD = 160
+DISTANCE_THRESHOLD = 5
 
 class BaseModel(Model):
     class Meta:
@@ -47,7 +47,7 @@ class Client(BaseModel):
 
     @classmethod
     def get_logs(cls, public_token, date=None):
-        """Return a filtered list of location logs."""
+        """Return a filtered list of location logs dicts."""
         try:
             client = Client.get(Client.public_token == public_token)
         except Client.DoesNotExist:
@@ -60,21 +60,22 @@ class Client(BaseModel):
                 date,
                 date + timedelta(days=1))))\
                 .order_by(Location.date_created.desc())
-        # Filter the logs
-        filtered_logs = [log for log in logs if log.accuracy < ACCURACY_THRESHOLD ]
-        previous = None
-        for log in logs:
-            # if log
-            #filtered_log = vars(log)['__data__'] # Turn object into dict
-            #if filtered_log['accuracy']
-            if previous is None:
+        # Filter the logs for accuracy
+        temp_filtered_list = [log for log in logs if log.accuracy < ACCURACY_THRESHOLD ]
+        # Filter logs for distance moved
+        filtered_logs = []
+        previous_log = None
+        for log in temp_filtered_list:
+
+            if previous_log is None:
                 print('continuing')
-                previous = log
+                previous_log = log
                 continue
-            dist = gpxpy.geo.haversine_distance(previous.latitude, previous.longitude, log.latitude, log.longitude)
-            # print('Distance = ' + str(dist))
-            previous = log
-            #log['distance_moved'] = dist
+            dist = gpxpy.geo.haversine_distance(previous_log.latitude, previous_log.longitude, log.latitude, log.longitude)
+            if dist > DISTANCE_THRESHOLD:
+                filtered_logs.append({'lat': float(log.latitude), 'lng': float(log.longitude),
+                       'title': log.date_created.strftime("Here at %H:%M"), 'dist': dist, 'acc': log.accuracy}, )
+            previous_log = log
         print("Unfiltered logs: " + str(len(logs)))
         print("Filtered logs: " + str(len(filtered_logs)))
         return client, filtered_logs
