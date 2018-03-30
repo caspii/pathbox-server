@@ -18,8 +18,38 @@ def hello():
 
 
 @app.route("/v1/")
-def log_location():
-    log_request(request)
+def log_v1():
+    """Write incoming request data to the database"""
+    data = request.args.to_dict()
+    try:
+        date_str = urllib.parse.unquote(request.args.get('date'))
+        date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
+    except AttributeError as e:
+        print("Date cannot be parsed: " + str(e))
+    except TypeError: # TODO: This was added to test GPSLogger App. Should probably be removed
+        date = datetime.now()
+    client = Client.fetch(public_token=data['username'], secret_token=data['username'])
+    if client:
+        client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
+                             accuracy=float(data['accuracy']), clientname=data['clientname'])
+    return "You did it"
+
+
+@app.route("/v2/")
+def log_v2():
+    """Write incoming request data to the database"""
+    data = request.args.to_dict()
+    try:
+        date_str = urllib.parse.unquote(request.args.get('date'))
+        date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
+    except AttributeError as e:
+        print("Date cannot be parsed: " + str(e))
+    except TypeError: # TODO: This was added to test GPSLogger App. Should probably be removed
+        date = datetime.now()
+    client = Client.fetch(public_token=data['public_token'], secret_token=data['secret_token'])
+    if client:
+        client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
+                             accuracy=float(data['accuracy']), clientname=data['clientname'])
     return "You did it"
 
 
@@ -52,31 +82,6 @@ def debug(public_token, date_str=None):
     for log in logs:
         output += json.dumps(log) + '<br>'
     return output
-
-
-def log_request(request):
-    """Write incoming request data to the database"""
-    latitude = request.args.get('latitude')
-    longitude = request.args.get('longitude')
-    accuracy = request.args.get('accuracy')
-    public_token = request.args.get('username')
-    secret_token = request.args.get('username') # This is a terrible hack TODO: revert this
-    # secret_token = request.args.get('sessionid')
-    clientname = request.args.get('clientname')
-    #print(request)
-    try:
-        date_str = urllib.parse.unquote(request.args.get('date'))
-        date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
-    except AttributeError as e:
-        print("Date cannot be parsed: " + str(e))
-    except TypeError: # TODO: This was added to test GPSLogger App. Should probably be removed
-        date = datetime.now()
-    print("New log from : " + public_token + " Date: " + str(date))
-    print("----")
-    client = Client.fetch(public_token, secret_token)
-    if client:
-        client.add_log_entry(latitude=float(latitude), longitude=float(longitude), date=date, accuracy=float(accuracy),
-                             clientname=clientname)
 
 
 @app.cli.command('init_db')
