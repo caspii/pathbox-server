@@ -67,12 +67,11 @@ class Client(BaseModel):
         previous_log = None
         for log in temp_filtered_list:
 
-            if previous_log is None:
-                print('continuing')
-                previous_log = log
-                continue
-            dist = gpxpy.geo.haversine_distance(previous_log.latitude, previous_log.longitude, log.latitude, log.longitude)
-            if dist > DISTANCE_THRESHOLD:
+            if previous_log is None:  # First iteration
+                dist = 0
+            else:
+                dist = gpxpy.geo.haversine_distance(previous_log.latitude, previous_log.longitude, log.latitude, log.longitude)
+            if dist > DISTANCE_THRESHOLD or previous_log is None:
                 filtered_logs.append({'lat': float(log.latitude), 'lng': float(log.longitude),
                        'title': log.date_created.strftime("Here at %H:%M"), 'dist': dist, 'acc': log.accuracy}, )
             previous_log = log
