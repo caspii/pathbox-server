@@ -50,7 +50,7 @@ def log_v2():
     if client:
         client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
                              accuracy=float(data['accuracy']), clientname=data.get('clientname'))
-    return "You did it"
+    return "You did it v2"
 
 
 @app.route("/view/<public_token>/<date_str>")
