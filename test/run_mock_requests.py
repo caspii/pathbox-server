@@ -45,3 +45,7 @@ requests.get(TARGET_SERVER + REQUEST_URL % (date, 90.9, 'person2_v2', 10000, 20,
 # Test Client name
 requests.get(TARGET_SERVER + REQUEST_URL % (date, 90.9, 'person3_v2', 10000, 100, secret3, -1000, 'Dude I love this'))
 requests.get(TARGET_SERVER + REQUEST_URL % (date, 90.9, 'person4_v2', 10000, 22, secret4, -1000, "This is frickin' cool"))
+
+# Real requests
+R = '/v2/?date=2018-03-30%2B21%253A41%253A05&altitude=0.0&public_token=bvv5vjxf&latitude=52.4985387&accuracy=25.788&secret_token=955b9e28-429e-4262-8956-c529d2d45616&longitude=13.3331414'
+requests.get(TARGET_SERVER + R)

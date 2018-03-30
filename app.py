@@ -49,7 +49,7 @@ def log_v2():
     client = Client.fetch(public_token=data['public_token'], secret_token=data['secret_token'])
     if client:
         client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
-                             accuracy=float(data['accuracy']), clientname=data['clientname'])
+                             accuracy=float(data['accuracy']), clientname=data.get('clientname'))
     return "You did it"
 
 
