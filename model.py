@@ -24,7 +24,7 @@ class Client(BaseModel):
     """
     Class representing one connecting client
     """
-    secret_token = CharField(unique=True)   # Created by client, required to log an entry
+    secret_token = CharField()              # Created by client, required to log an entry
     public_token = CharField(unique=True)   # Created by client, visible in web URL
     date_first_seen = DateTimeField(default=datetime.now)
     date_last_seen = DateTimeField(default=datetime.now)
@@ -82,6 +82,7 @@ class Client(BaseModel):
 
     def add_log_entry(self, latitude, longitude, date, accuracy, clientname=None):
         print('Logging for client ' + self.public_token)
+        print("----")
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date, accuracy=accuracy)
         self.date_last_seen = datetime.now()
         self.client_name=clientname
