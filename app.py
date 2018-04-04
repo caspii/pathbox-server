@@ -19,16 +19,17 @@ def hello():
 
 @app.route("/v1/")
 def log_v1():
-    """Write incoming request data to the database"""
+    """Write incoming request data to the database. v1 of the API and not very safe!"""
     data = request.args.to_dict()
     try:
         date_str = urllib.parse.unquote(request.args.get('date'))
         date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
     except AttributeError as e:
         print("Date cannot be parsed: " + str(e))
-    except TypeError: # TODO: This was added to test GPSLogger App. Should probably be removed
+    except TypeError:  # Added to test GPSLogger App.
         date = datetime.now()
-    client = Client.fetch(public_token=data['username'], secret_token=data['username'])
+    client = Client.fetch(public_token=data['username'],
+                          secret_token=data['username'])  # Hack meaning no secret token is used
     if client:
         client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
                              accuracy=float(data['accuracy']), clientname=data.get('clientname'))
