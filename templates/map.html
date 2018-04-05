@@ -3,7 +3,7 @@
 {% block body %}
 <div class="container">
 
-<h3 class="mt-2">{{client.client_name}} > {{date}}</h3>
+    <h3 class="mt-2">{{client.client_name}} <span class="text-muted">{{date}}</span></h3>
      <p>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_before)}}"
            class="btn btn-info active" role="button" aria-pressed="true">Show day before</a>
