@@ -13,7 +13,7 @@ db.initialize(SqliteDatabase(database))
 # Filter variables
 # Determins what locations are discarded
 ACCURACY_THRESHOLD = 160
-DISTANCE_THRESHOLD = 5
+DISTANCE_THRESHOLD = 30
 
 class BaseModel(Model):
     class Meta:
