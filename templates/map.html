@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
-{% block title %}{{ date }} - Location tracker{% endblock %}
+{% block title %}{{client.client_name}} > {{ date }} > Location tracker{% endblock %}
 {% block body %}
 <div class="container">
 
-<h3 class="mt-2">Tracks for {{date}}</h3>
+<h3 class="mt-2">{{client.client_name}} > {{date}}</h3>
      <p>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_before)}}"
            class="btn btn-info active" role="button" aria-pressed="true">Show day before</a>
@@ -15,7 +15,7 @@
            disabled
            {% endif %}
            " role="button" aria-pressed="true">Show day after</a> </p>
-    <p><span class="text-muted">Name of device</span> {{client.client_name}},
+    <p>
     <span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
     <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}</p>
     </div>
