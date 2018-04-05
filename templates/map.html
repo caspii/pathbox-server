@@ -6,9 +6,9 @@
 <h3 class="mt-2">Tracks for {{date}}</h3>
      <p>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_before)}}"
-           class="btn btn-primary active" role="button" aria-pressed="true">Show day before</a>
+           class="btn btn-info active" role="button" aria-pressed="true">Show day before</a>
         <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_after)}}"
-           class="btn btn-primary
+           class="btn btn-info
            {% if day_after %}
            active
            {% else %}
@@ -42,13 +42,13 @@
                 var tracks = new google.maps.Polyline({
                     path: coords,
                     geodesic: true,
-                    strokeColor: '#2E64FE',
+                    strokeColor: '#E95420',
                     strokeOpacity: 0.8,
                     strokeWeight: 3
                 });
 
                 var image = {
-                    url:  '{{url_for('static', filename='blue_dot.svg')}}',
+                    url:  '{{url_for('static', filename='map_dot.svg')}}',
 
                     scaledSize: new google.maps.Size(16, 16),
                     origin: new google.maps.Point(0, 0),
