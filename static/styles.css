@@ -6,4 +6,7 @@
 
 .jumbotron {
     padding: 12rem 2rem;
+    background: url('/static/city-map.jpg');
+
 }
+
