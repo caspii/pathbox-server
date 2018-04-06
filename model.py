@@ -11,9 +11,9 @@ database = os.path.join(basedir, 'database.db')
 db.initialize(SqliteDatabase(database))
 ########################################################################
 # Filter variables
-# Determins what locations are discarded
-ACCURACY_THRESHOLD = 160
-DISTANCE_THRESHOLD = 30
+# Determines what locations are discarded
+ACCURACY_THRESHOLD = 160  # Accuracy above is discarded
+DISTANCE_THRESHOLD = 30   # Distance below is discarded
 
 class BaseModel(Model):
     class Meta:
@@ -84,7 +84,7 @@ class Client(BaseModel):
         print("----")
         Location.create(client=self, latitude=latitude, longitude=longitude, date_created=date, accuracy=accuracy)
         self.date_last_seen = datetime.now()
-        self.client_name=clientname
+        self.client_name = clientname
         self.save()
 
 
