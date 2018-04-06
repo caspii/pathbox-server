@@ -32,7 +32,7 @@ def log_v1():
                           secret_token=data['username'])  # Hack meaning no secret token is used
     if client:
         client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
-                             accuracy=float(data['accuracy']), clientname=data.get('clientname'))
+                             accuracy=float(data['accuracy']), clientname=data.get('clientname', 'GPS Tracker v1'))
     return "You did it"
 
 
