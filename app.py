@@ -4,9 +4,11 @@ import urllib.parse
 from datetime import datetime, timedelta
 from lib.humantime import pretty_date
 import json
+from flaskext.markdown import Markdown
 
 
 app = Flask(__name__)
+Markdown(app)
 
 # Allow pretty dates via jinja2 filter
 app.jinja_env.filters['human_time'] = pretty_date
@@ -83,6 +85,11 @@ def debug(public_token, date_str=None):
     for log in logs:
         output += json.dumps(log) + '<br>'
     return output
+
+
+@app.route('/faq')
+def faq():
+    return render_template('FAQ.md')
 
 
 @app.cli.command('init_db')
