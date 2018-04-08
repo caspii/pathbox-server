@@ -11,6 +11,11 @@
 }
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
-    margin: 3.0rem 0 0.5rem 0;
+    margin: 2rem 0 0.5rem 0;
     color: grey;
+}
+
+.features-icons .features-icons-item .features-icons-icon {
+    height: 6rem;
+    font-size: 7rem;
 }

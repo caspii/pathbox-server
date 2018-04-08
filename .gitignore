@@ -2,5 +2,6 @@ venv
 *pyc
 .idea/
 *db
+static/node_modules
 database.db-journal
 .DS_Store

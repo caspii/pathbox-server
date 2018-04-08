@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css" >
 
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
+    <link href="{{url_for('static', filename='node_modules/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet" type="text/css">
   </head>
 
   <body>
@@ -56,8 +57,9 @@
 
     </main>
 
-    <footer class="container">
-      <p>👋 Hi! Missing a feature or have feedback? <a href="mailto:caspar.wrede@gmail.com">Let us know.</a></p>
+    <footer class="container mt-2">
+      <hr>
+      <p class="text-muted"><i class="icon-bubble"></i> Hi! Missing a feature or have feedback? <a href="mailto:caspar.wrede@gmail.com">Let us know.</a></p>
     </footer>
 
     <!-- Bootstrap core JavaScript
