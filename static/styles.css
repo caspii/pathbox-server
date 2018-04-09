@@ -19,3 +19,18 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     height: 6rem;
     font-size: 7rem;
 }
+
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    .jumbotron .display-2 {
+        font-size: 1.5em;
+    }
+}
+
+/* Medium devices (desktops, 992px and up) */
+@media (max-width: 992px) {
+    .jumbotron .display-2 {
+        font-size: 4em;
+    }
+}
