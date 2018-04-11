@@ -20,17 +20,37 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
     font-size: 7rem;
 }
 
-
-/* Small devices (tablets, 768px and up) */
-@media (max-width: 768px) {
-    .jumbotron .display-2 {
-        font-size: 1.5em;
-    }
-}
-
 /* Medium devices (desktops, 992px and up) */
 @media (max-width: 992px) {
+        .jumbotron {
+        padding: 2em;
+    }
+
     .jumbotron .display-2 {
         font-size: 4em;
     }
+
+    .jumbotron .display-4 {
+        font-size: 3em;
+    }
 }
+
+
+
+/* Small devices (tablets, 768px and up) */
+@media (max-width: 768px) {
+    .jumbotron {
+        padding: 2rem;
+    }
+
+    .jumbotron .display-2 {
+        font-size: 3em;
+    }
+
+    .jumbotron .display-4 {
+        font-size: 2em;
+    }
+
+}
+
+
