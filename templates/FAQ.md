@@ -13,6 +13,11 @@ Open the app and presss "Start tracking". That's all. You can then share your tr
 Anyone with the link can see your location history.
 
 ---
+#### How can it work without an account, login or password?
+The app generates a link that contains a unique key. Only people with that exact link can access the tracks from that particular install of the app. 
+
+
+---
 #### Can I download my data?
 You will be able to download your tracks in a GPX file format soon.
 
