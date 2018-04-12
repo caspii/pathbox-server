@@ -91,6 +91,9 @@ def debug(public_token, date_str=None):
 def faq():
     return render_template('FAQ.md')
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 @app.cli.command('init_db')
 def init_db_command():
