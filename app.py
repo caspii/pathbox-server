@@ -21,7 +21,7 @@ def hello():
 
 @app.route("/v1/")
 def log_v1():
-    """Write incoming request data to the database. v1 of the API and not very safe!"""
+    """Write incoming request data to the database. NOTE: v1 of the API and not very safe!"""
     data = request.args.to_dict()
     try:
         date_str = urllib.parse.unquote(request.args.get('date'))
@@ -56,8 +56,8 @@ def log_v2():
     return "You did it v2"
 
 
-@app.route("/view/<public_token>/<date_str>")
-@app.route("/view/<public_token>/")
+@app.route("/v/<public_token>/<date_str>")
+@app.route("/v/<public_token>/")
 def view_username(public_token, date_str=None):
     if date_str:
         date = datetime.strptime(date_str, "%Y-%m-%d").date()
@@ -75,7 +75,7 @@ def view_username(public_token, date_str=None):
                            date=date.strftime("%B %d, %Y"), day_before=day_before, day_after=day_after)
 
 
-@app.route("/debug/<public_token>/<date_str>")
+@app.route("/d/<public_token>/<date_str>")
 def debug(public_token, date_str=None):
     """"Output all logs as JSON dump for debugging purposes"""
     if date_str:
