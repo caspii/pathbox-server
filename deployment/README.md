@@ -11,3 +11,7 @@
 4. Restart Apache: `service apache2 reload`
 
 **NOTE** Currently the virtualenv is not used. This must be configured in apache_conf.wsgi
+
+### SSL
+When using the Cloudflare flexible SSL, Apache must listening on port 80. 
+This is because traffic between Cloudflare and the server is not encrypted!
