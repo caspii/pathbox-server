@@ -1,1 +1,1 @@
-scp root@loc.b3rlin.net:/var/www/loc.b3rlin.net/database.db .
+scp root@loc.b3rlin.net:/var/www/pathbox.co/database.db .

@@ -6,7 +6,7 @@ import logging
 
 
 logging.basicConfig(stream=sys.stderr)
-sys.path.insert(0,"/var/www/loc.b3rlin.net/")
+sys.path.insert(0,"/var/www/pathbox.co/")
 
 from app import app as application
 application.secret_key = '6546423232323asd84654654654'
