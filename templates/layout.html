@@ -11,11 +11,11 @@
     <title>{% block title %} PathBox {% endblock %}</title>
 
     <!-- Bootstrap core CSS -->
-    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">-->
     <link rel="stylesheet" href="https://bootswatch.com/4/united/bootstrap.min.css" >
 
     <link rel="stylesheet" href="{{url_for('static', filename='styles.css')}}">
     <link href="{{url_for('static', filename='node_modules/simple-line-icons/css/simple-line-icons.css')}}" rel="stylesheet" type="text/css">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35934020-9"></script>
