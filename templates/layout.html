@@ -18,6 +18,7 @@
     <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    {% if not config.DEBUG %}
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35934020-9"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -26,6 +27,7 @@
       gtag('config', 'UA-35934020-9', { 'anonymize_ip': true });
 
     </script>
+    {% endif %}
   </head>
 
   <body>
