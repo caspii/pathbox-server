@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}Stats{% endblock %}
+{% block body %}
+<div class="container">
+    <div class="col-xs-12">
+        <h4>Newest clients</h4>
+        <p>{{no_clients}} registered </p>
+    </div>
+
+    <div class="list-group">
+        {% for client in clients %}
+        <a class="list-group-item" href="/v/{{client.public_token}}" >
+            {{client.client_name}}
+            <div class="list-group-item-text">
+                <span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
+                <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}
+            </div>
+        </a>
+
+        {% endfor %}
+    </div>
+
+</div>
+{% endblock %}

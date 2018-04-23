@@ -94,9 +94,9 @@ def faq():
 
 @app.route('/stats99')
 def stats():
-    # return render_template('FAQ.md')
-    clients = Client.get_newest()
-    return clients
+    clients, no_clients = Client.get_newest()
+    return render_template('stats.html', clients=clients, no_clients=no_clients)
+
 
 @app.errorhandler(404)
 def page_not_found(e):
@@ -105,7 +105,7 @@ def page_not_found(e):
 
 @app.errorhandler(500)
 def server_500(e):
-    return render_template('500.html'), 404
+    return render_template('500.html'), 500
 
 
 @app.cli.command('init_db')
