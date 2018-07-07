@@ -48,7 +48,7 @@ class Client(BaseModel):
     @classmethod
     def get_newest(cls):
         """Get list of newest clients"""
-        clients = Client.select().order_by(-Client.date_first_seen).paginate(0, 10)
+        clients = Client.select().order_by(-Client.date_first_seen).paginate(0, 50)
         no_clients = Client.select().count()
         return clients, no_clients
 
