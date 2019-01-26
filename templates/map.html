@@ -17,7 +17,8 @@
            " role="button" aria-pressed="true">Show day after</a> </p>
     <p>
     <span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
-    <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}</p>
+    <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}.</p>
+    <p>ℹ️ All Times are UTC (in the GMT timezone).</p>
     </div>
     {% if coords|length == 0 %}
     <div id="map"><h3 class="text-center mt-5 text-muted">Sorry, there is no data for this day 👻</h3></div>
