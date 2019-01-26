@@ -62,7 +62,7 @@ def view_username(public_token, date_str=None):
     if date_str:
         date = datetime.strptime(date_str, "%Y-%m-%d").date()
     else:
-        date = datetime.now().date()
+        date = datetime.utcnow().date()
     client, logs = Client.get_logs(public_token, date)
 
     day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")    # Generate link for previous day
