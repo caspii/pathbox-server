@@ -3,9 +3,14 @@ This is a webapp implemented in Python Flask which
 * receives locations from multiple mobile clients
 * displays those locations on a map
 
-A client request looks like this:
+## Quick Reference
+* gcloud set project: `gcloud config get-value project`
+* Set default region `gcloud config set run/region europe-west1`
 
-`localhost:5000/view/?latitude=X&longitude=Y&username=Z&sessionid=A`
+Deployment
+1. Build docker image: `gcloud builds submit --tag gcr.io/location-tracker-70ccd/pathbox`
+2. Deploy docker image: `gcloud run deploy --image gcr.io/location-tracker-70ccd/pathbox --platform managed`
+
 
 ## Temporary bookmarks
 
@@ -21,7 +26,6 @@ http://www.jacquet80.eu/blog/post/2011/02/Display-GPX-tracks-using-Google-Maps-A
 1. Create virtual environment: `virtualenv -p python3 venv`
 1. Enter virtualenv with `. venv/bin/activate`
 1. `pip install -r requirements.txt`
-1. Initialise database: `./init_db.sh`
 1. Start dev server: `./run.sh`
 
 
