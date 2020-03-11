@@ -1,54 +1,57 @@
 {% extends "layout.html" %}
 {% block body %}
 
- <!-- Main jumbotron for a primary marketing message or call to action -->
-      <div class="jumbotron text-center back">
+    <div class="jumbotron text-center back">
         <div class="container">
-          <h2 class="display-2">Simple location tracking and sharing</h2>
-          <h3 class="my-5 text-info display-4">There is no easier app for tracking a device</h3>
-          <p><a class="btn btn-primary btn-lg display-3" href="https://play.google.com/store/apps/details?id=de.casparwre.gpslogger" role="button">Download App Now <i class="icon-screen-smartphone"></i></a></p>
+            <h2 class="display-2">Simple location tracking and sharing</h2>
+            <h3 class="my-5 text-info display-4">There is no easier app for tracking a device</h3>
+{#            <p><a class="btn btn-primary btn-lg display-3" href="https://play.google.com/store/apps/details?id=de.casparwre.gpslogger" #}
+{#                  role="button">Download App Now <i class="icon-screen-smartphone"></i></a></p>#}
+            <h3 class="text-danger">
+                The app is currently under development. Stay tuned!
+            </h3>
         </div>
-      </div>
+    </div>
 
-      <div class="container">
-        <section class="features-icons text-center">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-4">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                  <div class="features-icons-icon d-flex">
-                    <i class="icon-lock m-auto text-primary"></i>
-                  </div>
-                  <h3>Anonymous</h3>
-                  <p class="lead mb-0">This location tracker does not require an account, in fact, no personally identifable data is
-              required at all. To view a device's tracks, all you need is a browser.</p>
+    <div class="container">
+        <section class="features-icons ">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-4">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="icon-lock"></i>
+                            </div>
+                            <h3>Anonymous</h3>
+                            <p class="lead mb-0">This location tracker does not require an account, in fact, no personally identifable data is
+                                required at all. To view a device's tracks, all you need is a browser.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="icon-rocket"></i>
+                            </div>
+                            <h3>Free</h3>
+                            <p class="lead mb-0">Using the app is completely free. There are no subscriptions, up-front costs, free-trials or any of that.
+                                Track as many devices as you like and it will still cost you nothing.</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <div class="features-icons-item mx-auto mb-0 mb-lg-3">
+                            <div class="features-icons-icon d-flex">
+                                <i class="icon-magic-wand"></i>
+                            </div>
+                            <h3>Easy to Use</h3>
+                            <p class="lead mb-0">To track any device, install the app and share the link that is generated. Anyone with access to the
+                                link will be able to track the mobile device using a browser of their choice.</p>
+                        </div>
+                    </div>
                 </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="features-icons-item mx-auto mb-5 mb-lg-0 mb-lg-3">
-                  <div class="features-icons-icon d-flex">
-                    <i class="icon-rocket m-auto text-primary"></i>
-                  </div>
-                  <h3>Free</h3>
-                  <p class="lead mb-0">Using the app is completely free. There are no subscriptions, up-front costs, free-trials or any of that.
-              Track as many devices as you like and it will still cost you nothing.</p>
-                </div>
-              </div>
-              <div class="col-lg-4">
-                <div class="features-icons-item mx-auto mb-0 mb-lg-3">
-                  <div class="features-icons-icon d-flex">
-                    <i class="icon-magic-wand m-auto text-primary"></i>
-                  </div>
-                  <h3>Easy to Use</h3>
-                  <p class="lead mb-0">To track any device, install the app and share the link that is generated. Anyone with access to the
-              link will be able to track the mobile device using a browser of their choice.</p>
-                </div>
-              </div>
             </div>
-          </div>
         </section>
 
-      </div> <!-- /container -->
+    </div> <!-- /container -->
 
 {% endblock %}
 
