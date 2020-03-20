@@ -1,14 +1,20 @@
+import google
 from flask import Flask, request, abort, render_template
 from model import init_db, Client
 import urllib.parse
 from datetime import datetime, timedelta
 from lib.humantime import pretty_date
-import json
 from flaskext.markdown import Markdown
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import firestore
 
 
 app = Flask(__name__)
 Markdown(app)
+cred = credentials.Certificate('firestore-credentials.json')
+firebase_admin.initialize_app(cred)
+db = firestore.client()
 
 # Allow pretty dates via jinja2 filter
 app.jinja_env.filters['human_time'] = pretty_date
@@ -17,6 +23,38 @@ app.jinja_env.filters['human_time'] = pretty_date
 @app.route("/")
 def hello():
     return render_template('landing.html')
+
+
+@app.route("/d/<public_token>/")
+def debug(public_token):
+    """"Output all logs as JSON dump for debugging purposes"""
+    doc_ref = db.collection(u'clients').document(public_token)
+
+    try:
+        doc = doc_ref.get()
+        data = doc.to_dict()
+        raw_locations = data['locations']
+        locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
+        return '{}'.format(locations)
+    except google.cloud.exceptions.NotFound:
+        return 'No such document!'
+
+
+@app.route("/v/<public_token>/")
+def view_username(public_token):
+    doc_ref = db.collection(u'clients').document(public_token)
+
+    try:
+        doc = doc_ref.get()
+        data = doc.to_dict()
+        raw_locations = data['locations']
+        locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
+        client_name = 'Caspar Device'
+        return render_template('map.html', coords=locations, client_name=client_name)
+    except google.cloud.exceptions.NotFound:
+        return 'No such document!'
+
+
 
 
 @app.route("/v1/")
@@ -54,37 +92,6 @@ def log_v2():
         client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
                              accuracy=float(data['accuracy']), clientname=data.get('clientname'))
     return "You did it v2"
-
-
-@app.route("/v/<public_token>/<date_str>")
-@app.route("/v/<public_token>/")
-def view_username(public_token, date_str=None):
-    if date_str:
-        date = datetime.strptime(date_str, "%Y-%m-%d").date()
-    else:
-        date = datetime.utcnow().date()
-    client, logs = Client.get_logs(public_token, date)
-
-    day_before = (date - timedelta(days=1)).strftime("%Y-%m-%d")    # Generate link for previous day
-    day_after = (date + timedelta(days=1))                          # Generate link for next day
-    if day_after > datetime.now().date():                           # Don't allow dates in the future
-        day_after = None
-    else:
-        day_after = day_after.strftime("%Y-%m-%d")
-    return render_template('map.html', coords=logs, client=client,
-                           date=date.strftime("%B %d, %Y"), day_before=day_before, day_after=day_after)
-
-
-@app.route("/d/<public_token>/<date_str>")
-def debug(public_token, date_str=None):
-    """"Output all logs as JSON dump for debugging purposes"""
-    if date_str:
-        date = datetime.strptime(date_str, "%Y-%m-%d").date()
-    client, logs = Client.get_logs(public_token, date)
-    output = "<h1>Raw log dump</h2>"
-    for log in logs:
-        output += json.dumps(log) + '<br>'
-    return output
 
 
 @app.route('/faq')

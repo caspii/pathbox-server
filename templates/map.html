@@ -1,23 +1,13 @@
 {% extends "layout.html" %}
-{% block title %}{{client.client_name}} > {{ date }} > Location tracker{% endblock %}
+{% block title %}{{client_name}} > Location tracker{% endblock %}
 {% block body %}
 <div class="container">
 
-    <h3 class="mt-2">{{client.client_name}} <span class="text-muted">{{date}}</span></h3>
-     <p>
-        <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_before)}}"
-           class="btn btn-info active" role="button" aria-pressed="true">Show day before</a>
-        <a href="{{url_for('view_username', public_token=client.public_token, date_str=day_after)}}"
-           class="btn btn-info
-           {% if day_after %}
-           active
-           {% else %}
-           disabled
-           {% endif %}
-           " role="button" aria-pressed="true">Show day after</a> </p>
+    <h3 class="mt-2">{{client_name}}</h3>
+
     <p>
-    <span class="text-muted">First seen </span>{{client.date_first_seen | human_time}},
-    <span class="text-muted">last seen </span>{{client.date_last_seen | human_time}}.</p>
+    <span class="text-muted">First seen </span>TODO,
+    <span class="text-muted">last seen </span>TODO</p>
     <p>ℹ️ All Times are UTC (in the GMT timezone).</p>
     </div>
     {% if coords|length == 0 %}
@@ -66,10 +56,6 @@
 
                     });
                 }
-
-
-
-
                 tracks.setMap(map);
                 map.fitBounds(bounds);
             }
@@ -79,7 +65,7 @@
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     {% if coords|length != 0 %}
     <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD4p2Lv9o1Wgo-owLJ6xGLtVL9DEBzG2fU&callback=initMap">
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBSHy6pZaIBm-7nCek3zMXu9qiXc5Ej7nY&callback=initMap">
     </script>
     {% endif %}
 
