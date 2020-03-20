@@ -24,17 +24,19 @@ app.jinja_env.filters['human_time'] = pretty_date
 def hello():
     return render_template('landing.html')
 
+def get_locations(public_token):
+    doc_ref = db.collection(u'clients').document(public_token)
+    doc = doc_ref.get()
+    data = doc.to_dict()
+    raw_locations = data['locations']
+    locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
+    return locations
 
 @app.route("/d/<public_token>/")
 def debug(public_token):
     """"Output all logs as JSON dump for debugging purposes"""
-    doc_ref = db.collection(u'clients').document(public_token)
-
     try:
-        doc = doc_ref.get()
-        data = doc.to_dict()
-        raw_locations = data['locations']
-        locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
+        locations = get_locations(public_token)
         return '{}'.format(locations)
     except google.cloud.exceptions.NotFound:
         return 'No such document!'
@@ -42,14 +44,9 @@ def debug(public_token):
 
 @app.route("/v/<public_token>/")
 def view_username(public_token):
-    doc_ref = db.collection(u'clients').document(public_token)
-
+    client_name = "Caspar"  # TODO Change this!
     try:
-        doc = doc_ref.get()
-        data = doc.to_dict()
-        raw_locations = data['locations']
-        locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
-        client_name = 'Caspar Device'
+        locations = get_locations(public_token)
         return render_template('map.html', coords=locations, client_name=client_name)
     except google.cloud.exceptions.NotFound:
         return 'No such document!'
