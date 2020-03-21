@@ -29,7 +29,7 @@ You will be able to download your tracks in a GPX file format soon.
 
 ---
 ### Can I delete my data?
-Not yet. This feature is being worked on.
+Not yet.
 
 ---
 ### How can I prevent others from seeing my tracks?

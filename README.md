@@ -11,7 +11,7 @@ This is a webapp implemented in Python Flask which
 Taken from here: https://cloud.google.com/run/docs/quickstarts/build-and-deploy
 
 1. Build docker image: `gcloud builds submit --tag gcr.io/location-tracker-70ccd/pathbox`
-2. Deploy docker image: `gcloud run deploy --image gcr.io/location-tracker-70ccd/pathbox --platform managed`
+2. Deploy docker image: `gcloud run deploy pathbox --image gcr.io/location-tracker-70ccd/pathbox --platform managed`
 
 
 ## Temporary bookmarks
