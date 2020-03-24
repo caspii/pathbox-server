@@ -35,8 +35,9 @@ def get_data(public_token):
     locations = [{'lat': x['latitude'], 'lng': x['longitude'], 'title': parse_timestamp(x['time'])}
                  for x in raw_locations]
     last_update = parse_timestamp(data['last_update'])
+    first_update = parse_timestamp(raw_locations[0]['time'])
     client_name = data['client_name']
-    return locations, client_name, last_update
+    return locations, client_name, last_update, first_update
 
 
 def parse_timestamp(timestamp):
@@ -61,8 +62,9 @@ def view_debug(public_token):
 def view_client(public_token):
     """Fetch all location data for a single client and display om a map"""
     try:
-        locations, client_name, last_update = get_data(public_token)
-        return render_template('map.html', coords=locations, client_name=client_name, last_update=last_update)
+        locations, client_name, last_update, first_update = get_data(public_token)
+        return render_template('map.html', coords=locations, client_name=client_name, last_update=last_update,
+                               first_update=first_update)
     except google.cloud.exceptions.NotFound:
         return 'No such document!'
 
