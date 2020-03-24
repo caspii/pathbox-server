@@ -24,71 +24,43 @@ app.jinja_env.filters['human_time'] = pretty_date
 def hello():
     return render_template('landing.html')
 
-def get_locations(public_token):
+
+def get_data(public_token):
     doc_ref = db.collection(u'clients').document(public_token)
     doc = doc_ref.get()
     data = doc.to_dict()
     raw_locations = data['locations']
     locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
-    return locations
+    last_update = parse_timestamp(data['last_update'])
+    client_name = data['client_name']
+    return locations, client_name, last_update
+
+
+def parse_timestamp(timestamp):
+    """Return a nicely formatted string from a timestamp"""
+    date = datetime.fromtimestamp(timestamp / 1e3)
+    formatted_date = date.strftime("%m/%d/%Y, %H:%M:%S")
+    return formatted_date
+
 
 @app.route("/d/<public_token>/")
-def debug(public_token):
+def view_debug(public_token):
     """"Output all logs as JSON dump for debugging purposes"""
     try:
-        locations = get_locations(public_token)
+        locations = get_data(public_token)
         return '{}'.format(locations)
     except google.cloud.exceptions.NotFound:
         return 'No such document!'
 
 
 @app.route("/v/<public_token>/")
-def view_username(public_token):
-    client_name = "Caspar"  # TODO Change this!
+def view_client(public_token):
+    """Fetch all location data for a single client and display om a map"""
     try:
-        locations = get_locations(public_token)
-        return render_template('map.html', coords=locations, client_name=client_name)
+        locations, client_name, last_update = get_data(public_token)
+        return render_template('map.html', coords=locations, client_name=client_name, last_update=last_update)
     except google.cloud.exceptions.NotFound:
         return 'No such document!'
-
-
-
-
-@app.route("/v1/")
-def log_v1():
-    """Write incoming request data to the database. NOTE: v1 of the API and not very safe!"""
-    data = request.args.to_dict()
-    try:
-        date_str = urllib.parse.unquote(request.args.get('date'))
-        date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
-    except AttributeError as e:
-        print("Date cannot be parsed: " + str(e))
-    except TypeError:  # Added to test GPSLogger App.
-        date = datetime.now()
-    client = Client.fetch(public_token=data['username'],
-                          secret_token=data['username'])  # Hack meaning no secret token is used
-    if client:
-        client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
-                             accuracy=float(data['accuracy']), clientname=data.get('clientname', 'GPS Tracker v1'))
-    return "You did it"
-
-
-@app.route("/v2/")
-def log_v2():
-    """Write incoming request data to the database"""
-    data = request.args.to_dict()
-    try:
-        date_str = urllib.parse.unquote(request.args.get('date'))
-        date = datetime.strptime(date_str, '%Y-%m-%d+%H:%M:%S')
-    except AttributeError as e:
-        print("Date cannot be parsed: " + str(e))
-    except TypeError: # TODO: This was added to test GPSLogger App. Should probably be removed
-        date = datetime.now()
-    client = Client.fetch(public_token=data['public_token'], secret_token=data['secret_token'])
-    if client:
-        client.add_log_entry(latitude=float(data['latitude']), longitude=float(data['longitude']), date=date,
-                             accuracy=float(data['accuracy']), clientname=data.get('clientname'))
-    return "You did it v2"
 
 
 @app.route('/faq')
@@ -110,11 +82,3 @@ def page_not_found(e):
 @app.errorhandler(500)
 def server_500(e):
     return render_template('500.html'), 500
-
-
-@app.cli.command('init_db')
-def init_db_command():
-    """Initializes the database using the command line."""
-    # TODO: prevent this from being done on production
-    init_db()
-    print('Initialized the database.')
