@@ -9,6 +9,8 @@ import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import firestore
 
+from utils import elapsed_time
+
 
 app = Flask(__name__)
 Markdown(app)
@@ -30,7 +32,8 @@ def get_data(public_token):
     doc = doc_ref.get()
     data = doc.to_dict()
     raw_locations = data['locations']
-    locations = [{'lat': x['latitude'], 'lng': x['longitude']} for x in raw_locations]
+    locations = [{'lat': x['latitude'], 'lng': x['longitude'], 'title': parse_timestamp(x['time'])}
+                 for x in raw_locations]
     last_update = parse_timestamp(data['last_update'])
     client_name = data['client_name']
     return locations, client_name, last_update
@@ -39,8 +42,9 @@ def get_data(public_token):
 def parse_timestamp(timestamp):
     """Return a nicely formatted string from a timestamp"""
     date = datetime.fromtimestamp(timestamp / 1e3)
-    formatted_date = date.strftime("%m/%d/%Y, %H:%M:%S")
-    return formatted_date
+    # formatted_date = date.strftime("%m/%d/%Y, %H:%M:%S")
+    pretty_time = elapsed_time(date)
+    return pretty_time
 
 
 @app.route("/d/<public_token>/")
