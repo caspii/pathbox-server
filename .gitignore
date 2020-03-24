@@ -5,3 +5,5 @@ venv
 static/node_modules
 database.db-journal
 .DS_Store
+
+!.idea/
