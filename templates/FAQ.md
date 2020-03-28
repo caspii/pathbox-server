@@ -28,8 +28,8 @@ The app generates a link that contains a unique key. Only people with that exact
 You will be able to download your tracks in a GPX file format soon.
 
 ---
-### Can I delete my data?
-Not yet.
+### How can I delete my data?
+Please send a mail including the link to your tracks to <a href="mailto:caspar.wrede@gmail.com">this e-mail address</a>.
 
 ---
 ### How can I prevent others from seeing my tracks?
