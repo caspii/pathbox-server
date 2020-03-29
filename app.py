@@ -74,6 +74,11 @@ def faq():
     return render_template('FAQ.md')
 
 
+@app.route('/privacy')
+def privacy():
+    return render_template('privacy.md')
+
+
 @app.route('/stats99')
 def stats():
     clients, no_clients = Client.get_newest()
