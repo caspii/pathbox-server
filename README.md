@@ -5,6 +5,7 @@ This is a webapp implemented in Python Flask which
 
 ## Quick Reference
 * gcloud get/set project: `gcloud config get-value project`
+* glocud set project: `gcloud config set project location-tracker-70ccd`
 * Set default region `gcloud config set run/region europe-west1`
 
 ### Deployment
