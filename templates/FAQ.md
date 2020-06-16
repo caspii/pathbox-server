@@ -7,7 +7,7 @@
 
 ### Where can I download the app?
 
-The app **was** available on Google play but didn't work that well. It's being redeveloped with new technologies. Stay tuned!
+You can download the [app for Android by clicking here](https://play.google.com/store/apps/details?id=de.casparwre.gpslogger).
 
 ---
 ### How does it work?

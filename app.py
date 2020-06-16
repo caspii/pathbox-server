@@ -1,8 +1,8 @@
+import os
+
 import google
-from flask import Flask, request, abort, render_template
-from model import init_db, Client
-import urllib.parse
-from datetime import datetime, timedelta
+from flask import Flask, render_template
+from datetime import datetime
 from lib.humantime import pretty_date
 from flaskext.markdown import Markdown
 import firebase_admin
@@ -14,7 +14,8 @@ from utils import elapsed_time
 
 app = Flask(__name__)
 Markdown(app)
-cred = credentials.Certificate('firestore-credentials.json')
+file = os.path.join(os.path.dirname(__file__), 'firestore-credentials.json')
+cred = credentials.Certificate(file)
 firebase_admin.initialize_app(cred)
 db = firestore.client()
 
