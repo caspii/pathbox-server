@@ -1,5 +1,6 @@
 import os
 
+import logging
 import google
 from flask import Flask, render_template
 from datetime import datetime
@@ -33,6 +34,7 @@ def get_data(public_token):
     doc = doc_ref.get()
     data = doc.to_dict()
     if data is None:
+        logging.error('No Client found for token: ' + public_token)
         return "Ooops"
     raw_locations = data['locations']
     locations = [{'lat': x['latitude'], 'lng': x['longitude'], 'title': parse_timestamp(x['time'])}
