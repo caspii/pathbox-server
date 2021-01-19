@@ -30,6 +30,7 @@ def hello():
 
 
 def get_data(public_token):
+    MAX_INACCURACY = 1000  # Any locations with a higher inaccuracy will be discarded
     doc_ref = db.collection(u'clients').document(public_token)
     doc = doc_ref.get()
     data = doc.to_dict()
@@ -38,7 +39,7 @@ def get_data(public_token):
         return "Ooops"
     raw_locations = data['locations']
     locations = [{'lat': x['latitude'], 'lng': x['longitude'], 'title': parse_timestamp(x['time'])}
-                 for x in raw_locations]
+                 for x in raw_locations if x['accuracy'] < MAX_INACCURACY]
     last_update = parse_timestamp(data['last_update'])
     first_update = parse_timestamp(raw_locations[0]['time'])
     client_name = data['client_name']
