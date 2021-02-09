@@ -30,7 +30,7 @@ def hello():
 
 
 def get_data(public_token):
-    MAX_INACCURACY = 1000  # Any locations with a higher inaccuracy will be discarded
+    MAX_INACCURACY = 2000  # Any locations with a higher inaccuracy will be discarded
     doc_ref = db.collection(u'clients').document(public_token)
     doc = doc_ref.get()
     data = doc.to_dict()
