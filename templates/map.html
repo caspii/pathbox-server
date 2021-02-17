@@ -3,7 +3,7 @@
 {% block metadescription %} Track the location of '{{client_name}}' here using Pathbox (the word's simplest GPS Tracker){% endblock %}
 
 {% block body %}
-<div class="container">
+<div class="container-fluid">
 
     <h3 class="mt-2">{{client_name}}</h3>
 
@@ -44,9 +44,9 @@
                 var image = {
                     url:  '{{url_for('static', filename='map_dot.svg')}}',
 
-                    scaledSize: new google.maps.Size(16, 16),
+                    scaledSize: new google.maps.Size(8, 8),
                     origin: new google.maps.Point(0, 0),
-                    anchor: new google.maps.Point(8, 8)
+                    anchor: new google.maps.Point(4, 4)
                 };
 
                 // Add all locations as markers
