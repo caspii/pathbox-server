@@ -19,14 +19,9 @@
 
     <!-- Global site tag (gtag.js) - Google Analytics -->
     {% if not config.DEBUG %}
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-35934020-9"></script>
-        <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-35934020-9', { 'anonymize_ip': true });
-
-        </script>
+        <!-- Fathom - beautiful, simple website analytics -->
+        <script src="https://cdn.usefathom.com/script.js" data-site="NZTGADGT" defer></script>
+        <!-- / Fathom -->
     {% endif %}
 </head>
 
