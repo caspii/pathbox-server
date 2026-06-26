@@ -1,0 +1,14 @@
+---
+layout: default
+---
+<section class="doc">
+  <div class="wrap doc__inner">
+    <header class="doc__head">
+      <h1 class="doc__title">{{ page.title }}</h1>
+      {% if page.lead %}<p class="doc__lead">{{ page.lead }}</p>{% endif %}
+    </header>
+    <div class="prose">
+      {{ content }}
+    </div>
+  </div>
+</section>

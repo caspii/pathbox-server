@@ -1,0 +1,142 @@
+---
+layout: default
+---
+{% assign s = site.data.site %}
+
+<section class="hero">
+  <div class="wrap hero__grid">
+    <div class="hero__copy">
+      <p class="badge"><span class="badge__dot" aria-hidden="true"></span>Launching soon</p>
+      {% if page.hero.eyebrow %}<p class="eyebrow">{{ page.hero.eyebrow }}</p>{% endif %}
+      <h1 class="hero__title">{{ page.hero.title }}</h1>
+      {% if page.hero.lead %}<p class="hero__lead">{{ page.hero.lead }}</p>{% endif %}
+      <div class="hero__actions">
+        <a class="btn btn--beacon" href="{{ s.notify_url }}">{{ s.cta_label }}</a>
+        <span class="btn-note">{{ page.hero.cta_note | default: 'Free at launch · No device · No account' }}</span>
+      </div>
+    </div>
+    <div class="hero__art">
+      {% include reassurance-card.html label=page.hero.card_label status=page.hero.card_status ago=page.hero.card_ago %}
+    </div>
+  </div>
+</section>
+
+{% if page.trust %}
+<section class="trust">
+  <div class="wrap trust__row">
+    {% for t in page.trust %}
+      <div class="trust__item">
+        <span class="trust__big">{{ t.big }}</span>
+        <span class="trust__small">{{ t.small }}</span>
+      </div>
+    {% endfor %}
+  </div>
+</section>
+{% endif %}
+
+{% if page.props %}
+<section class="props">
+  <div class="wrap">
+    {% if page.props_title %}<h2 class="section-title">{{ page.props_title }}</h2>{% endif %}
+    <div class="props__grid">
+      {% for p in page.props %}
+        <article class="prop">
+          <h3 class="prop__title">{{ p.title }}</h3>
+          <p class="prop__body">{{ p.body }}</p>
+        </article>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if page.steps %}
+<section class="steps" id="how-it-works">
+  <div class="wrap">
+    <h2 class="section-title">{{ page.steps_title | default: 'How it works' }}</h2>
+    <ol class="steps__list">
+      {% for step in page.steps %}
+        <li class="step">
+          <span class="step__pin">{{ forloop.index }}</span>
+          <h3 class="step__title">{{ step.title }}</h3>
+          <p class="step__body">{{ step.body }}</p>
+        </li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+{% endif %}
+
+{% if page.compare %}
+<section class="compare">
+  <div class="wrap">
+    <h2 class="section-title">{{ page.compare.title | default: 'How Pathbox compares' }}</h2>
+    {% if page.compare.intro %}<p class="section-lead">{{ page.compare.intro }}</p>{% endif %}
+    <div class="compare__scroll">
+      <table class="compare__table">
+        <thead>
+          <tr>
+            <th scope="col"><span class="visually-hidden">Feature</span></th>
+            {% for col in page.compare.columns %}
+              <th scope="col" class="{% if forloop.first %}is-ours{% endif %}">{{ col }}</th>
+            {% endfor %}
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in page.compare.rows %}
+            <tr>
+              <th scope="row">{{ row.feature }}</th>
+              {% for v in row.values %}
+                <td class="{% if forloop.first %}is-ours{% endif %}">{{ v }}</td>
+              {% endfor %}
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+{% endif %}
+
+{% if content != blank %}
+<section class="prose-section">
+  <div class="wrap prose">
+    {{ content }}
+  </div>
+</section>
+{% endif %}
+
+{% if page.honesty %}
+<section class="honesty">
+  <div class="wrap honesty__inner">
+    <p class="eyebrow eyebrow--light">Straight talk</p>
+    <h2 class="honesty__title">{{ page.honesty.title }}</h2>
+    <div class="honesty__body">{{ page.honesty.body | markdownify }}</div>
+  </div>
+</section>
+{% endif %}
+
+{% if page.faqs %}
+<section class="faq">
+  <div class="wrap">
+    <h2 class="section-title">{{ page.faqs_title | default: 'Questions families ask' }}</h2>
+    <div class="faq__list">
+      {% for item in page.faqs %}
+        <details class="faq__item">
+          <summary class="faq__q">{{ item.q }}</summary>
+          <div class="faq__a">{{ item.a | markdownify }}</div>
+        </details>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<section class="final-cta">
+  <div class="wrap final-cta__inner">
+    <h2 class="final-cta__title">{{ page.final_cta.title | default: 'Set it up together this weekend' }}</h2>
+    {% if page.final_cta.lead %}<p class="final-cta__lead">{{ page.final_cta.lead }}</p>{% endif %}
+    <a class="btn btn--beacon btn--lg" href="{{ s.notify_url }}">{{ s.cta_label }}</a>
+    <p class="btn-note btn-note--center">Free at launch · No device · No monthly fee · No account</p>
+  </div>
+</section>

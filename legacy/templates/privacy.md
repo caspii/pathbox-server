@@ -21,10 +21,10 @@ When the app has internet access, your location is sent to remote servers run by
 When you use Firebase, Google is generally a data processor under GDPR and processes personal data on your behalf. 
 
 
-## Google Analytics
-Pathbox uses Google Analytics.
+## Analytics
+Pathbox uses Fathom Analytics.
 
-The following information is sent to Google Analytics when using Pathbox:
+The following information is sent to Fathom Analytics when using Pathbox:
 
 * Device, browser and referrer;
 * Unique identifiers;

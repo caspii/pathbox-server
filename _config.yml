@@ -1,0 +1,47 @@
+title: Pathbox
+tagline: Free GPS tracker for keeping an eye on an aging parent
+description: >-
+  Keep an eye on an aging parent using the phone they already carry. No monthly
+  fee, no GPS device to buy, no account. See where they are from any browser — free.
+url: https://pathbox.co
+lang: en
+author: Pathbox
+
+# Used by jekyll-seo-tag for Twitter/OG cards
+twitter:
+  card: summary_large_image
+logo: /assets/img/compass.svg
+social:
+  name: Pathbox
+  links: []
+
+# Default OG/Twitter share image (see jekyll-seo-tag)
+image: /assets/img/og.png
+
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Pretty URLs: /faq instead of /faq.html
+permalink: pretty
+
+# Keep Jekyll away from the backend, strategy docs, tooling, and secrets
+exclude:
+  - legacy/
+  - docs/
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - README.md
+  - .idea/
+  - "*.md~"
+
+sass:
+  style: compressed
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: page
+      image: /assets/img/og.png

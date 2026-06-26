@@ -1,0 +1,41 @@
+{% comment %}
+  Signature element: a calm "they're OK" map card. Pure SVG + CSS — no photos.
+  Params (optional): label (default "Mum"), status (default "near home"), ago (default "4 min ago")
+{% endcomment %}
+<figure class="reassure" role="img"
+  aria-label="A map showing {{ include.label | default: 'Mum' }}'s recent route, last seen {{ include.ago | default: '4 minutes ago' }}, {{ include.status | default: 'near home' }}.">
+  <svg class="reassure__map" viewBox="0 0 400 300" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <!-- soft map ground -->
+    <rect width="400" height="300" fill="#F3ECE0"/>
+    <!-- gentle 'parks' -->
+    <rect x="232" y="22" width="150" height="96" rx="14" fill="#E4ECDF"/>
+    <rect x="24" y="196" width="120" height="92" rx="14" fill="#E4ECDF"/>
+    <!-- quiet streets -->
+    <g stroke="#E0D5C4" stroke-width="7" fill="none" stroke-linecap="round">
+      <path d="M-10 84 H410"/>
+      <path d="M-10 168 H410"/>
+      <path d="M104 -10 V310"/>
+      <path d="M276 -10 V310"/>
+    </g>
+    <!-- the breadcrumb route: where they've been -->
+    <path class="reassure__route" d="M60 250 C 110 230, 120 150, 170 150 S 250 150, 300 92"
+      fill="none" stroke="#C9692E" stroke-width="3" stroke-linecap="round" stroke-dasharray="1 11"/>
+    <!-- start: home -->
+    <g transform="translate(60 250)">
+      <circle r="11" fill="#fff" stroke="#6E9B7C" stroke-width="2.5"/>
+      <path d="M-4.5 1 L0 -4 L4.5 1 V5 H-4.5 Z" fill="#6E9B7C"/>
+    </g>
+    <!-- end: live beacon -->
+    <g class="reassure__beacon" transform="translate(300 92)">
+      <circle class="reassure__ping" r="13" fill="#F0A23A"/>
+      <circle class="reassure__ping reassure__ping--2" r="13" fill="#F0A23A"/>
+      <circle r="9" fill="#F0A23A" stroke="#fff" stroke-width="3"/>
+    </g>
+  </svg>
+
+  <figcaption class="reassure__chip">
+    <span class="reassure__live" aria-hidden="true"></span>
+    <span class="reassure__name">{{ include.label | default: 'Mum' }}</span>
+    <span class="reassure__meta">{{ include.ago | default: '4 min ago' }} · {{ include.status | default: 'near home' }}</span>
+  </figcaption>
+</figure>

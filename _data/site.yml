@@ -1,0 +1,25 @@
+# Single source of truth for links and contact details used across the site.
+#
+# PRE-LAUNCH: the old Android app was unpublished during the rebuild, so there is
+# no live download yet. All CTAs point at the notify link until the new app ships.
+app_status: coming_soon
+cta_label: "Get launch updates"
+notify_url: "mailto:hello@pathbox.co?subject=Notify%20me%20when%20Pathbox%20launches&body=Please%20let%20me%20know%20when%20Pathbox%20is%20available."
+support_email: hello@pathbox.co
+viewer_domain: https://view.pathbox.co
+# Re-enable and swap CTAs back to a store link when the new app is published:
+# app_android: https://play.google.com/store/apps/details?id=...
+
+# Reference figures used in comparison copy (keep honest; update as competitors change)
+life360_price: "$8–25/mo"
+device_price: "$150–250 + $30–40/mo"
+
+nav:
+  - label: How it works
+    url: "/#how-it-works"
+  - label: For elderly parents
+    url: "/gps-tracker-for-elderly-no-monthly-fee/"
+  - label: For kids
+    url: "/gps-tracker-for-kids/"
+  - label: FAQ
+    url: "/faq/"

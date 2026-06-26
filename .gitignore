@@ -1,9 +1,24 @@
-venv
-*pyc
-.idea/
-*db
-static/node_modules
-database.db-journal
-.DS_Store
+# Jekyll build output / cache
+_site/
+.jekyll-cache/
+.jekyll-metadata
+.sass-cache/
+vendor/
+Gemfile.lock
 
+# Secrets — never commit (rotate the old committed key, see Step 0 in the relaunch plan)
+legacy/firestore-credentials.json
+
+# Python backend runtime (now under legacy/)
+venv
+legacy/venv
+**/__pycache__/
+*pyc
+*db
+database.db-journal
+legacy/static/node_modules
+
+# Editor / OS
+.idea/
 !.idea/
+.DS_Store
