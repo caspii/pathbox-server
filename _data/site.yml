@@ -4,8 +4,8 @@
 # no live download yet. All CTAs point at the notify link until the new app ships.
 app_status: coming_soon
 cta_label: "Get launch updates"
-notify_url: "mailto:hello@pathbox.co?subject=Notify%20me%20when%20Pathbox%20launches&body=Please%20let%20me%20know%20when%20Pathbox%20is%20available."
-support_email: hello@pathbox.co
+notify_url: "mailto:caspar@keepthescore.com?subject=Notify%20me%20when%20Pathbox%20launches&body=Please%20let%20me%20know%20when%20Pathbox%20is%20available."
+support_email: caspar@keepthescore.com
 viewer_domain: https://view.pathbox.co
 # Re-enable and swap CTAs back to a store link when the new app is published:
 # app_android: https://play.google.com/store/apps/details?id=...

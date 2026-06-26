@@ -59,7 +59,7 @@ faqs:
   - q: "How private is the link?"
     a: "The link holds a long random key and isn’t listed anywhere. Only the people you send it to can open it."
   - q: "When does it launch, and will it work on iPhone?"
-    a: "Pathbox is being rebuilt and launches soon on both Android and iPhone. The location you view works in any browser. [Get launch updates](mailto:hello@pathbox.co?subject=Notify%20me%20when%20Pathbox%20launches) and we’ll tell you when it’s ready."
+    a: "Pathbox is being rebuilt and launches soon on both Android and iPhone. The location you view works in any browser. [Get launch updates](mailto:caspar@keepthescore.com?subject=Notify%20me%20when%20Pathbox%20launches) and we’ll tell you when it’s ready."
   - q: "Can I delete the data?"
     a: "Yes — your data is yours. You can have the full location history deleted whenever you want. See our [privacy policy](/privacy/)."
 final_cta:
